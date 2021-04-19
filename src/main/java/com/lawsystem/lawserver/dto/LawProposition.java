@@ -19,4 +19,8 @@ public class LawProposition {
 
         return law;
     }
+
+    public LawContent getContent() {
+        return new LawContent();
+    }
 }

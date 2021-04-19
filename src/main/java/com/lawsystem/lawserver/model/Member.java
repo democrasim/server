@@ -2,6 +2,7 @@ package com.lawsystem.lawserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.annotation.Nullable;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 @Entity
 public class Member {
 

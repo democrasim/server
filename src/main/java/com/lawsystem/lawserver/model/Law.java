@@ -2,6 +2,7 @@ package com.lawsystem.lawserver.model;
 
 import com.lawsystem.lawserver.model.content.LawContent;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.Nullable;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Accessors(chain = true)
 public class Law {
 
     @Id
@@ -37,7 +39,6 @@ public class Law {
 
     private boolean anonymousLegislator = false;
 
-    @Nullable
-    private String fakeName;
+    private String fakeName = "";
 
 }

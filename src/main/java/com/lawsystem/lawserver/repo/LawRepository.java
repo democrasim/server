@@ -20,5 +20,7 @@ public interface LawRepository extends PagingAndSortingRepository<Law, Long> {
     List<Law> findAllByStatus(LawStatus status);
     Page<Law> findAllByStatus(LawStatus status, Pageable pageable);
 
-    List<Law> findAllByTimestampBefore(Date timestamp);
+
+    List<Law> findAllByTimestampBeforeAndStatus(Date timestamp, LawStatus status);
+
 }

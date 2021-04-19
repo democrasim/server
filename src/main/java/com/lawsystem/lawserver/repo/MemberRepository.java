@@ -15,4 +15,5 @@ public interface MemberRepository extends PagingAndSortingRepository<Member, Lon
     boolean existsByPhoneOrName(String phone, String name);
     List<Member> findAll();
     List<Member> findAllByNameContaining(String name);
+    List<Member> findAllByRegistered(boolean registered);
 }

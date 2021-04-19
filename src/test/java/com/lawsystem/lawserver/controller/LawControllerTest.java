@@ -2,6 +2,7 @@ package com.lawsystem.lawserver.controller;
 
 import com.lawsystem.lawserver.model.Law;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,13 @@ class LawControllerTest {
     void proposeFact() {
     }
 
+    @BeforeEach
+    public void before() {
+
+    }
+
     @Test
-    void vote() {
-        lawController.memberRepository.findAllByNameContaining("dan");
+    void vote()
+    {
     }
 }
