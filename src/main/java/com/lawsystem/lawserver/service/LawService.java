@@ -52,6 +52,7 @@ public class LawService {
             .orElseGet(() -> {
                 LawVote vote = new LawVote();
                 vote.setLaw(lawObject);
+                vote.setVoter(memberObject);
                 vote.setVote(type);
                 vote.setReason(reason);
                 lawObject.getVotes().add(vote);
@@ -84,12 +85,13 @@ public class LawService {
         return law;
     }
 
-    public Page<Law> getAllPassedLaws(int page, int limit) {
-        return lawRepository.findAllByStatus(LawStatus.PASSED, PageRequest.of(page - 1, limit));
+    public List<Law> getAllLawsByStatus(LawStatus status, int page, int limit) {
+        return lawRepository.findAllByStatus(status, PageRequest.of(page - 1, limit));
     }
 
-    public List<Law> getAllPassedLaws() {
-        return lawRepository.findAllByStatus(LawStatus.PASSED);
+
+    public List<Law> getAllLawsByStatus(LawStatus status) {
+        return lawRepository.findAllByStatus(status);
     }
 
 

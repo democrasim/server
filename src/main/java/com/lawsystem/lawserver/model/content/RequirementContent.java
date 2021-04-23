@@ -16,4 +16,8 @@ public class RequirementContent extends DescribedContent {
         this.setType(LawType.REQUIREMENT);
     }
     private Date due;
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

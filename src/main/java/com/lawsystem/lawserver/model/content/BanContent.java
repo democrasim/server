@@ -15,5 +15,8 @@ public class BanContent extends DescribedContent {
     public BanContent() {
         this.setType(LawType.BAN);
     }
-
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

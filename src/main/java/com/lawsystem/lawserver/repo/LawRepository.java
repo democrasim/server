@@ -5,6 +5,7 @@ import com.lawsystem.lawserver.model.LawStatus;
 import com.lawsystem.lawserver.model.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,8 +19,7 @@ public interface LawRepository extends PagingAndSortingRepository<Law, Long> {
     Page<Law> findAllByLegislator(Member user, Pageable pageable);
 
     List<Law> findAllByStatus(LawStatus status);
-    Page<Law> findAllByStatus(LawStatus status, Pageable pageable);
-
+    List<Law> findAllByStatus(LawStatus status, Pageable pageable);
 
     List<Law> findAllByTimestampBeforeAndStatus(Date timestamp, LawStatus status);
 

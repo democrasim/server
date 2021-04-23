@@ -4,6 +4,8 @@ plugins {
     id 'java'
 }
 
+
+
 group = 'com.lawsystem'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
@@ -28,6 +30,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'com.google.firebase:firebase-admin:7.1.1'
     implementation 'junit:junit:4.12'
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
+    testImplementation group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.5.RELEASE'
+
 }
 
 test {

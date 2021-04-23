@@ -10,4 +10,9 @@ public class FactContent extends DescribedContent {
     public FactContent() {
         this.setType(LawType.FACT);
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

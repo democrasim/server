@@ -24,4 +24,9 @@ public class AddMemberContent extends LawContent {
     private Member member;
 
     private String reason;
+
+    @Override
+    public String toString() {
+        return "Add new member: " + member.getName();
+    }
 }

@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,10 +44,13 @@ class MemberServiceTest {
 
     private MemberService memberService;
 
+    @Mock
+    private LawService lawService;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        memberService = new MemberService(memberRepository,lawContentRepository,lawRepository);
+        memberService = new MemberService(memberRepository, lawService);
 
 
     }
@@ -72,7 +76,7 @@ class MemberServiceTest {
     @Test
     void allUsers() {
 
-        List<Member> list = List.of(new Member("a","0").setRegistered(true), new Member("b","1"));
+        List<Member> list = Collections.singletonList(new Member("a", "0").setRegistered(true));
 
         when(memberRepository.findAll())
             .thenReturn(list);
