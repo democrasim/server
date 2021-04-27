@@ -77,7 +77,7 @@ public class LawService {
         law.setLegislator(member);
 
         LawContent content = proposition.getContent();
-
+        law.setContent(content);
 
         lawContentRepository.save(content);
         lawRepository.save(law);
