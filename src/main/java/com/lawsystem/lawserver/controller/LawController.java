@@ -60,6 +60,11 @@ public class LawController {
 
     }
 
+    @GetMapping(path="not_voted")
+    public @ResponseBody List<LawDto> getAllUnvotedLaws(String userId) {
+        return lawsToDtos(lawService.getAllUnvotedLaws(userId));
+    }
+
     @GetMapping(path="passed")
     public @ResponseBody List<LawDto> getAllPassedLaws() {
         return lawsToDtos(lawService.getAllLawsByStatus(LawStatus.PASSED));
