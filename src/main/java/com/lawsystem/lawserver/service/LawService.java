@@ -29,7 +29,7 @@ public class LawService {
     final LawRepository lawRepository;
     final LawContentRepository lawContentRepository;
 
-    public Law vote(long law, long member, VoteType type, String reason) throws UnregisteredMemberException, LawNotUnderVoteException {
+    public Law vote(String law, String member, VoteType type, String reason) throws UnregisteredMemberException, LawNotUnderVoteException {
         Law lawObject = lawRepository
             .findById(law)
             .orElseThrow(IllegalArgumentException::new);
@@ -72,14 +72,12 @@ public class LawService {
         }
 
         Law law = proposition.toLaw();
-
+        law.setContent(proposition.getContent());
 
         law.setLegislator(member);
 
-        LawContent content = proposition.getContent();
 
 
-        lawContentRepository.save(content);
         lawRepository.save(law);
 
         return law;

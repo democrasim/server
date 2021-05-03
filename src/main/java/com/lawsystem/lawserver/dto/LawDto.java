@@ -6,9 +6,7 @@ import com.lawsystem.lawserver.model.Member;
 import com.lawsystem.lawserver.model.content.LawContent;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +14,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class LawDto {
 
-    private long id;
+    private String id;
 
     private Member legislator;
 

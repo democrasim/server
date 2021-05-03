@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class VoteDto {
-    private long law;
-    private long member;
+    private String law;
+    private String member;
     private VoteType type;
     private String reason;
 }

@@ -7,19 +7,15 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+
 
 @Data
 @Accessors(chain = true)
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class LawContent {
-    @Id
-    @GeneratedValue
-    private long id;
 
-    @Enumerated(EnumType.ORDINAL)
     private LawType type;
 
     @Override

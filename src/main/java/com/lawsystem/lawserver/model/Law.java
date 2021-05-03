@@ -3,36 +3,31 @@ package com.lawsystem.lawserver.model;
 import com.lawsystem.lawserver.model.content.LawContent;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.lang.Nullable;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 
 @Data
-@Entity
+@Document
 @Accessors(chain = true)
 public class Law {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
-    @ManyToOne
     private Member legislator;
 
-    @OneToOne(optional = false)
     private LawContent content;
 
-    @OneToMany(mappedBy = "law")
     private List<LawVote> votes;
 
-    @Enumerated(EnumType.ORDINAL)
     private LawStatus status = LawStatus.UNDER_VOTE;
 
-    @CreationTimestamp
+    @CreatedDate
     private Date timestamp;
 
     private boolean constitutional = false;

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class LawProposition {
-    private long legislator;
+    private String legislator;
     private boolean anonymous;
     private boolean constitutional;
     private String fakeName;

@@ -3,26 +3,23 @@ package com.lawsystem.lawserver.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.*;
 
 @Data
-@Entity
+@Document
 @Accessors(chain = true)
 public class LawVote {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
-    @ManyToOne
     Member voter;
 
     @JsonIgnore
-    @ManyToOne
     Law law;
 
-    @Enumerated(EnumType.ORDINAL)
     VoteType vote;
 
     @Nullable

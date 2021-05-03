@@ -3,22 +3,23 @@ package com.lawsystem.lawserver.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nullable;
-import javax.persistence.*;
+
 import java.util.Date;
 
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-@Entity
+@Document
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
     @NonNull
     private String name;
@@ -33,6 +34,6 @@ public class Member {
 
     private boolean registered;
 
-    @CreationTimestamp
+    @CreatedDate
     private Date joined;
 }
