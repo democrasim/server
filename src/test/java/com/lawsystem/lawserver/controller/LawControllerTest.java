@@ -1,5 +1,6 @@
 package com.lawsystem.lawserver.controller;
 
+import com.lawsystem.lawserver.dto.LawDto;
 import com.lawsystem.lawserver.model.Law;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +23,9 @@ class LawControllerTest {
     LawController lawController;
 
     @Test
-    void getAllPassedLaws() throws Exception {
+    void getAllPassedLaws() {
         assertNotNull(lawController);
-        List<Law> list = lawController.getAllPassedLaws();
+        List<LawDto> list = lawController.getAllPassedLaws();
 
         assertNotNull(list);
         assertFalse(list.isEmpty());

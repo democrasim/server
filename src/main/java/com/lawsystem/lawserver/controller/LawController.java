@@ -32,9 +32,8 @@ import java.util.stream.Collectors;
 public class LawController {
 
     final LawService lawService;
+    final ModelMapper modelMapper;
 
-    @Autowired
-    ModelMapper modelMapper;
 
     @GetMapping(path="with_status/{status}/", params = {"page", "limit"})
     public @ResponseBody List<LawDto> getAllLawsByStatus(@PathVariable("status") LawStatus status, int page, int limit) {
