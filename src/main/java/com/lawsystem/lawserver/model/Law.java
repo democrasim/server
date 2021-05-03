@@ -28,7 +28,7 @@ public class Law {
     private LawStatus status = LawStatus.UNDER_VOTE;
 
     @CreatedDate
-    private Date timestamp;
+    private Date timestamp = new Date();
 
     private boolean constitutional = false;
 
