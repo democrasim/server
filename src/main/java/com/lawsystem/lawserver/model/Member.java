@@ -13,6 +13,7 @@ import java.util.Date;
 
 @Data
 @RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 @Document
@@ -29,8 +30,6 @@ public class Member {
     @JsonIgnore
     @Nullable
     private String token;
-
-    private boolean president;
 
     private boolean registered;
 

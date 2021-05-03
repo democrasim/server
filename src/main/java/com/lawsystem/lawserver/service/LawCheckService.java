@@ -4,47 +4,61 @@ import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.LawStatus;
 import com.lawsystem.lawserver.model.LawVote;
 import com.lawsystem.lawserver.model.VoteType;
+import com.lawsystem.lawserver.model.content.AddMemberContent;
+import com.lawsystem.lawserver.model.content.ChangePresidentContent;
+import com.lawsystem.lawserver.model.content.LawContent;
 import com.lawsystem.lawserver.repo.LawRepository;
 import com.lawsystem.lawserver.repo.LawVoteRepository;
+import com.lawsystem.lawserver.service.law_executors.AddMemberExecutor;
+import com.lawsystem.lawserver.service.law_executors.ChangePresidentExecutor;
+import com.lawsystem.lawserver.service.law_executors.LawExecutor;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.TemporalAmount;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @EnableScheduling
 public class LawCheckService {
 
     private final LawRepository lawRepository;
     private final LawVoteRepository lawVoteRepository;
+    private Map<Class, LawExecutor> executors=new HashMap<Class,LawExecutor>(){{
+        put(ChangePresidentContent.class, new ChangePresidentExecutor());
+        put(AddMemberContent.class,new AddMemberExecutor());
+    }};
 
     @Scheduled(fixedRate = 10000)
     public void checkLaws() {
         long DAY_IN_MS = 1000 * 60 * 60 * 24;
         Date dayAgo = new Date(System.currentTimeMillis() - DAY_IN_MS);
-
         List<Law> laws = lawRepository.findAllByTimestampBeforeAndStatus(dayAgo, LawStatus.UNDER_VOTE);
-
         laws.forEach(
-            law ->{
-                int supporting = lawVoteRepository.countAllByLawAndVote(law, VoteType.FOR);
-                int against = lawVoteRepository.countAllByLawAndVote(law, VoteType.AGAINST);
-
-                if(supporting > against) {
-                    law.setStatus(LawStatus.PASSED);
-                } else {
-                    law.setStatus(LawStatus.FAILED);
+                law -> {
+                    int supporting = lawVoteRepository.countAllByLawAndVote(law, VoteType.FOR);
+                    int against = lawVoteRepository.countAllByLawAndVote(law, VoteType.AGAINST);
+                    if (supporting > against) {
+                        law.setStatus(LawStatus.PASSED);
+                        execute(law.getContent());
+                    } else {
+                        law.setStatus(LawStatus.FAILED);
+                    }
+                    lawRepository.save(law);
                 }
-
-                lawRepository.save(law);
-            }
         );
-
     }
-
+    private void execute(LawContent lawContent){
+        LawExecutor executor=executors.get(lawContent.getClass());
+        if (executor!=null){
+            executor.execute(lawContent);
+        }
+    }
 }
