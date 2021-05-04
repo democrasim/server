@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -18,6 +19,7 @@ public class AddMemberContent extends LawContent {
         this.setType(LawType.ADD_MEMBER);
     }
 
+    @DBRef
     private Member member;
 
     private String reason;

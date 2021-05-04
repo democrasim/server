@@ -59,6 +59,7 @@ public class LawService {
         vote.setVote(type);
         vote.setReason(reason);
         lawObject.getVotes().add(vote);
+        lawVoteRepository.save(vote);
         lawRepository.save(lawObject);
         return lawObject;
     }
