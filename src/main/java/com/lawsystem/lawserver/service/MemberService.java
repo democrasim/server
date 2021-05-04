@@ -33,7 +33,6 @@ public class MemberService {
         proposition.setMember(member);
         proposition.setReason(reason);
         proposition.setAnonymous(false);
-        proposition.setConstitutional(false);
         proposition.setFakeName("");
 
         return lawService.proposeLaw(proposition, false);

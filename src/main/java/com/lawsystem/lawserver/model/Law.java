@@ -34,8 +34,6 @@ public class Law {
     @CreatedDate
     private Date timestamp = new Date();
 
-    private boolean constitutional = false;
-
     private boolean anonymousLegislator = false;
 
     private String fakeName = "";

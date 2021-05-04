@@ -8,13 +8,11 @@ import lombok.Data;
 public class LawProposition {
     private String legislator;
     private boolean anonymous;
-    private boolean constitutional;
     private String fakeName;
 
     public Law toLaw() {
         Law law = new Law();
         law.setFakeName(fakeName);
-        law.setConstitutional(constitutional);
         law.setAnonymousLegislator(anonymous);
 
         return law;

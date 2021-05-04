@@ -84,6 +84,10 @@ public class LawController {
     public @ResponseBody LawDto proposeRequirement(@RequestBody RequirementLawProposition proposition) throws UnregisteredMemberException {
         return modelMapper.map(lawService.proposeLaw(proposition, true), LawDto.class);
     }
+    @PostMapping(path = "propose_change_min_majority_for_member_joining")
+    public @ResponseBody LawDto proposeChangeMinMajorityForMemberJoiningProposition(@RequestBody ChangeMinMajorityForMemberJoiningProposition proposition) throws UnregisteredMemberException{
+        return modelMapper.map(lawService.proposeLaw(proposition, true),LawDto.class);
+    }
 
     @PutMapping(path="vote")
     public @ResponseBody Law vote(@RequestBody VoteDto vote) throws UnregisteredMemberException, LawNotUnderVoteException {
