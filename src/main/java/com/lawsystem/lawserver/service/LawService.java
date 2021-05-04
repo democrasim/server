@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -92,4 +93,17 @@ public class LawService {
     }
 
 
+    public List<Law> getAllUnvotedLaws(String userId) {
+        return lawRepository
+                .findAllByStatus(LawStatus.UNDER_VOTE)
+                .stream()
+                .filter(law -> law
+                        .getVotes()
+                        .stream()
+                        .anyMatch(vote -> vote
+                                .getVoter()
+                                .getId()
+                                .equals(userId)))
+                .collect(Collectors.toList());
+    }
 }

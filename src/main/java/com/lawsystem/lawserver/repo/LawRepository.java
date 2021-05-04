@@ -17,7 +17,7 @@ import java.util.List;
 public interface LawRepository extends MongoRepository<Law, String> {
 
     List<Law> findAllByLegislator(Member user);
-    Page<Law> findAllByLegislator(Member user, Pageable pageable);
+    List<Law> findAllByLegislator(Member user, Pageable pageable);
 
     List<Law> findAllByStatus(LawStatus status);
     List<Law> findAllByStatus(LawStatus status, Pageable pageable);
