@@ -9,9 +9,11 @@ import com.lawsystem.lawserver.model.content.ChangePresidentContent;
 import com.lawsystem.lawserver.model.content.LawContent;
 import com.lawsystem.lawserver.repo.LawRepository;
 import com.lawsystem.lawserver.repo.LawVoteRepository;
+import com.lawsystem.lawserver.repo.MemberRepository;
 import com.lawsystem.lawserver.service.law_executors.AddMemberExecutor;
 import com.lawsystem.lawserver.service.law_executors.ChangePresidentExecutor;
 import com.lawsystem.lawserver.service.law_executors.LawExecutor;
+import com.lawsystem.lawserver.service.law_executors.MainExecutor;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -29,16 +31,13 @@ import java.util.Map;
 @EnableScheduling
 public class LawCheckService {
 
+    private final MainExecutor executor;
     private final LawRepository lawRepository;
     private final LawVoteRepository lawVoteRepository;
-    private Map<Class, LawExecutor> executors=new HashMap<Class,LawExecutor>(){{
-        put(ChangePresidentContent.class, new ChangePresidentExecutor());
-        put(AddMemberContent.class,new AddMemberExecutor());
-    }};
 
     @Scheduled(fixedRate = 10000)
     public void checkLaws() {
-        long DAY_IN_MS = 1000 * 60 * 60 * 24;
+        long DAY_IN_MS = 1000;
         Date dayAgo = new Date(System.currentTimeMillis() - DAY_IN_MS);
         List<Law> laws = lawRepository.findAllByTimestampBeforeAndStatus(dayAgo, LawStatus.UNDER_VOTE);
         laws.forEach(
@@ -47,7 +46,7 @@ public class LawCheckService {
                     int against = lawVoteRepository.countAllByLawAndVote(law, VoteType.AGAINST);
                     if (supporting > against) {
                         law.setStatus(LawStatus.PASSED);
-                        execute(law.getContent());
+                        executor.execute(law.getContent());
                     } else {
                         law.setStatus(LawStatus.FAILED);
                     }
@@ -55,10 +54,5 @@ public class LawCheckService {
                 }
         );
     }
-    private void execute(LawContent lawContent){
-        LawExecutor executor=executors.get(lawContent.getClass());
-        if (executor!=null){
-            executor.execute(lawContent);
-        }
-    }
+
 }
