@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Law {
 
     private LawContent content;
 
-    private List<LawVote> votes;
+    private List<LawVote> votes=new ArrayList<>();
 
     private LawStatus status = LawStatus.UNDER_VOTE;
 

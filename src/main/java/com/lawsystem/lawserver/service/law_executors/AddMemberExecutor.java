@@ -8,6 +8,7 @@ public class AddMemberExecutor implements LawExecutor{
     private MemberRepository memberRepository;
     @Override
     public void execute(LawContent content) {
+        ((AddMemberContent)content).getMember().setRegistered(true);
         memberRepository.save(((AddMemberContent)content).getMember());
         //implement: send to whatsapp api
     }

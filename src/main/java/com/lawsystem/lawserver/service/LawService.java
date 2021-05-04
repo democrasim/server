@@ -31,8 +31,8 @@ public class LawService {
 
     public Law vote(String law, String member, VoteType type, String reason) throws UnregisteredMemberException, LawNotUnderVoteException {
         Law lawObject = lawRepository
-            .findById(law)
-            .orElseThrow(IllegalArgumentException::new);
+                .findById(law)
+                .orElseThrow(IllegalArgumentException::new);
 
         Member memberObject = memberRepository.findById(member).orElseThrow(IllegalArgumentException::new);
 
@@ -44,23 +44,21 @@ public class LawService {
             throw new LawNotUnderVoteException();
         }
 
-        LawVote lawVote = lawObject.getVotes()
-            .stream()
-            .filter(vote -> vote.getVoter().equals(memberObject))
-            .findAny()
-            .map(vote -> vote.setVote(type))
-            .orElseGet(() -> {
-                LawVote vote = new LawVote();
-                vote.setLaw(lawObject);
-                vote.setVoter(memberObject);
+        List<LawVote> votes = lawObject.getVotes();
+        for (LawVote vote : votes) {
+            if (vote.getVoter().equals(memberObject)) {
                 vote.setVote(type);
-                vote.setReason(reason);
-                lawObject.getVotes().add(vote);
-                return vote;
-            });
-
-        lawVoteRepository.save(lawVote);
-
+                lawRepository.save(lawObject);
+                return lawObject;
+            }
+        }
+        LawVote vote = new LawVote();
+        vote.setLaw(lawObject);
+        vote.setVoter(memberObject);
+        vote.setVote(type);
+        vote.setReason(reason);
+        lawObject.getVotes().add(vote);
+        lawRepository.save(lawObject);
         return lawObject;
     }
 
