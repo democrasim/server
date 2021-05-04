@@ -21,4 +21,9 @@ public class ChangePresidentExecutor implements LawExecutor {
         configurationLaws.setPresident(((ChangePresidentContent) content).getNewPresident());
         configurationLawsRepository.save(configurationLaws);
     }
+
+    @Override
+    public double getMinMajority() {
+        return 0.7;
+    }
 }

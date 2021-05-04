@@ -18,4 +18,9 @@ public class ChangeMinMajorityForMemberJoiningExecutor implements LawExecutor{
         configurationLaws.setMinMajorityForMemberJoining(changeMinMajorityForMemberJoiningContent.getMin());
         configurationLawsRepository.save(configurationLaws);
     }
+
+    @Override
+    public double getMinMajority() {
+        return 1;
+    }
 }
