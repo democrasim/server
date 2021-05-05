@@ -4,14 +4,12 @@ import com.lawsystem.lawserver.exception.DeadlineUnmetException;
 import com.lawsystem.lawserver.exception.LawNotPassesException;
 import com.lawsystem.lawserver.exception.UnenforceableLawException;
 import com.lawsystem.lawserver.exception.UnregisteredMemberException;
-import com.lawsystem.lawserver.model.Law;
-import com.lawsystem.lawserver.model.LawStatus;
-import com.lawsystem.lawserver.model.Member;
-import com.lawsystem.lawserver.model.Prosecution;
+import com.lawsystem.lawserver.model.*;
 import com.lawsystem.lawserver.model.content.PunishmentLawContent;
 import com.lawsystem.lawserver.model.content.RequirementContent;
 import com.lawsystem.lawserver.repo.LawRepository;
 import com.lawsystem.lawserver.repo.MemberRepository;
+import com.lawsystem.lawserver.repo.ProsecutionAppealRepository;
 import com.lawsystem.lawserver.repo.ProsecutionRepository;
 import com.lawsystem.lawserver.service.punishment_executors.MainPunishmentExecutor;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,7 @@ public class CourtService {
     private MemberRepository memberRepository;
     private ProsecutionRepository prosecutionRepository;
     private MainPunishmentExecutor punishmentExecutor;
+    private ProsecutionAppealRepository prosecutionAppealRepository;
 
     public void prosecute(String law, String prosecutorId, String prosecutedId, String reason) throws UnenforceableLawException, LawNotPassesException, DeadlineUnmetException, UnregisteredMemberException {
         Law lawObject = lawRepository.findById(law).orElseThrow(IllegalArgumentException::new);
@@ -41,15 +40,27 @@ public class CourtService {
         if (!prosecuted.isRegistered() || !prosecutor.isRegistered()) {
             throw new UnregisteredMemberException();
         }
-        Prosecution prosecution=new Prosecution().setProsecuted(prosecuted).setProsecutor(prosecutor).setReason(reason).setPunishmentLawContent(lawObject);
+        Prosecution prosecution = new Prosecution().setProsecuted(prosecuted).setProsecutor(prosecutor).setReason(reason)
+                .setPunishmentLawContent(lawObject).setStatus(ProsecutionStatus.IN_PROCESS);
         prosecutionRepository.save(prosecution);
     }
-    public void judgeReply(String prosecutionId, boolean accepted){
-        Prosecution prosecution=prosecutionRepository.findById(prosecutionId).orElseThrow(IllegalArgumentException::new);
-        if (accepted){
-            punishmentExecutor.execute(((PunishmentLawContent)prosecution.getPunishmentLawContent().getContent()).getPunishment(), prosecution.getProsecuted());
+
+    public void judgeReply(String prosecutionId, boolean accepted) {
+        Prosecution prosecution = prosecutionRepository.findById(prosecutionId).orElseThrow(IllegalArgumentException::new);
+        if (accepted) {
+            punishmentExecutor.execute(((PunishmentLawContent) prosecution.getPunishmentLawContent().getContent()).getPunishment(), prosecution.getProsecuted());
+            prosecution.setStatus(ProsecutionStatus.ACCEPTED);
+        } else {
+            prosecution.setStatus(ProsecutionStatus.DENIED);
         }
-        prosecution.setAccepted(accepted);
         prosecutionRepository.save(prosecution);
+    }
+    public void appeal(String prosecutionId, String reason){
+        Prosecution prosecution = prosecutionRepository.findById(prosecutionId).orElseThrow(IllegalArgumentException::new);
+        if (prosecution.getStatus()!=ProsecutionStatus.DENIED){
+            throw new IllegalArgumentException();
+        }
+        ProsecutionAppeal appeal=new ProsecutionAppeal().setProsecution(prosecution).setStatus(ProsecutionStatus.IN_PROCESS).setReason(reason);
+        prosecutionAppealRepository.save(appeal);
     }
 }
