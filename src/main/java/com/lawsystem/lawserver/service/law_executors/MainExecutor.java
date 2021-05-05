@@ -25,7 +25,7 @@ public class MainExecutor {
         executors = new HashMap<Class, LawExecutor>() {{
             put(ChangePresidentContent.class, changePresidentExecutor);
             put(AddMemberContent.class, addMemberExecutor);
-            put(ChangeMinMajorityForMemberJoiningContent.class,changeMinMajorityForMemberJoiningExecutor);
+            put(ChangeMinMajorityForMemberJoiningContent.class, changeMinMajorityForMemberJoiningExecutor);
         }};
     }
 
@@ -37,6 +37,10 @@ public class MainExecutor {
     }
 
     public double getMinMajority(Class c) {
-        return executors.get(c).getMinMajority();
+        LawExecutor executor = executors.get(c);
+        if (executor == null) {
+            return 0.5;
+        }
+        return executor.getMinMajority();
     }
 }
