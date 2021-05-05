@@ -8,6 +8,7 @@ public class BanExecutor implements PunishmentExecutor{
     private MemberRepository memberRepository;
     @Override
     public void execute(Punishment punishment, Member member) {
-        memberRepository.delete(member);
+        member.setRegistered(false);
+        memberRepository.save(member);
     }
 }
