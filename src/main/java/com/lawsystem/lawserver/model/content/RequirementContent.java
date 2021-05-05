@@ -1,19 +1,17 @@
 package com.lawsystem.lawserver.model.content;
 
-import com.lawsystem.lawserver.model.LawType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.lang.Nullable;
 
 import java.util.Date;
 
 @Data
 @Accessors(chain = true)
-public class RequirementContent extends DescribedContent {
+@AllArgsConstructor
+@NoArgsConstructor
+public class RequirementContent extends PunishmentLawContent {
+    private String requirement;
     private Date due;
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }

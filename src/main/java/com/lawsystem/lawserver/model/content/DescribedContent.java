@@ -12,9 +12,4 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 public class DescribedContent extends LawContent {
     private String description;
-
-    @Override
-    public String toString() {
-        return description;
-    }
 }

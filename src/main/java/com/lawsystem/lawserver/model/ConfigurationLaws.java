@@ -16,4 +16,5 @@ public class ConfigurationLaws {
     private Member president;
     private int TimeForLawsToPass;
     private double minMajorityForMemberJoining;
+    private int maxAppeals;
 }

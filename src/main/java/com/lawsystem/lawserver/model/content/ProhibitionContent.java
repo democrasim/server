@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProhibitionContent extends LawContent{
+public class ProhibitionContent extends PunishmentLawContent{
     private String prohibition;
-    private Punishment punishment;
 }

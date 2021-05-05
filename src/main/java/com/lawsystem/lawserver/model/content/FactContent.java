@@ -11,9 +11,4 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class FactContent extends DescribedContent {
     private String fact;
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }
