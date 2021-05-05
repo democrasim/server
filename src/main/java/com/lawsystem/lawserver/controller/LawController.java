@@ -1,29 +1,20 @@
 package com.lawsystem.lawserver.controller;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lawsystem.lawserver.dto.*;
+import com.lawsystem.lawserver.dto.LawDto;
+import com.lawsystem.lawserver.dto.LawProposition;
+import com.lawsystem.lawserver.dto.VoteDto;
 import com.lawsystem.lawserver.exception.LawNotUnderVoteException;
 import com.lawsystem.lawserver.exception.UnregisteredMemberException;
-import com.lawsystem.lawserver.model.*;
-import com.lawsystem.lawserver.model.content.BanContent;
-import com.lawsystem.lawserver.model.content.FactContent;
-import com.lawsystem.lawserver.repo.LawContentRepository;
-import com.lawsystem.lawserver.repo.LawRepository;
-import com.lawsystem.lawserver.repo.LawVoteRepository;
-import com.lawsystem.lawserver.repo.MemberRepository;
+import com.lawsystem.lawserver.model.Law;
+import com.lawsystem.lawserver.model.LawStatus;
 import com.lawsystem.lawserver.service.LawService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Duration;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -70,23 +61,9 @@ public class LawController {
         return lawsToDtos(lawService.getAllLawsByStatus(LawStatus.PASSED));
     }
 
-    @PostMapping(path="propose_ban")
-    public @ResponseBody LawDto proposeBan(@RequestBody BanLawProposition proposition) throws UnregisteredMemberException {
-        return modelMapper.map(lawService.proposeLaw(proposition, true), LawDto.class);
-    }
-
-    @PostMapping(path="propose_fact")
-    public @ResponseBody LawDto proposeFact(@RequestBody FactLawProposition proposition) throws UnregisteredMemberException {
-        return modelMapper.map(lawService.proposeLaw(proposition, true), LawDto.class);
-    }
-
-    @PostMapping(path="propose_requirement")
-    public @ResponseBody LawDto proposeRequirement(@RequestBody RequirementLawProposition proposition) throws UnregisteredMemberException {
-        return modelMapper.map(lawService.proposeLaw(proposition, true), LawDto.class);
-    }
-    @PostMapping(path = "propose_change_min_majority_for_member_joining")
-    public @ResponseBody LawDto proposeChangeMinMajorityForMemberJoiningProposition(@RequestBody ChangeMinMajorityForMemberJoiningProposition proposition) throws UnregisteredMemberException{
-        return modelMapper.map(lawService.proposeLaw(proposition, true),LawDto.class);
+    @PostMapping(path = "propose")
+    public @ResponseBody LawDto propose(@RequestBody LawProposition proposition) throws UnregisteredMemberException {
+        return modelMapper.map(lawService.proposeLaw(proposition), LawDto.class);
     }
 
     @PutMapping(path="vote")

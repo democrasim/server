@@ -9,7 +9,4 @@ import lombok.experimental.Accessors;
 public class ChangeMinMajorityForMemberJoiningContent extends LawContent {
     private double min;
 
-    public ChangeMinMajorityForMemberJoiningContent() {
-        this.setType(LawType.CHANGE_MIN_MAJORITY_FOR_MEMBER_JOINING);
-    }
 }

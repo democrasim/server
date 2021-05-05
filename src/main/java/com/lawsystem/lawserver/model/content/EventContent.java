@@ -8,9 +8,6 @@ import java.util.Date;
 
 public class EventContent extends DescribedContent {
 
-    public EventContent() {
-        this.setType(LawType.EVENT);
-    }
 
     private Date date;
     private Point location;

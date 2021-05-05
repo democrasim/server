@@ -9,6 +9,8 @@ public class LawProposition {
     private String legislator;
     private boolean anonymous;
     private String fakeName;
+    private String reason;
+    private LawContent content;
 
     public Law toLaw() {
         Law law = new Law();
@@ -19,6 +21,6 @@ public class LawProposition {
     }
 
     public LawContent getContent() {
-        return new LawContent();
+        return content;
     }
 }

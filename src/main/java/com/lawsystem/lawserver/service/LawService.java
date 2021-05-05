@@ -64,10 +64,10 @@ public class LawService {
         return lawObject;
     }
 
-    public Law proposeLaw(LawProposition proposition, boolean requiresRegistration) throws UnregisteredMemberException {
+    public Law proposeLaw(LawProposition proposition) throws UnregisteredMemberException {
         Member member = memberRepository.findById(proposition.getLegislator()).orElseThrow(IllegalArgumentException::new);
 
-        if (!member.isRegistered() && requiresRegistration) {
+        if (!member.isRegistered()) {
             throw new UnregisteredMemberException();
         }
 

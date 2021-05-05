@@ -11,9 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Accessors(chain = true)
 @Data
 public class BanContent extends DescribedContent {
-    public BanContent() {
-        this.setType(LawType.BAN);
-    }
     @Override
     public String toString() {
         return super.toString();

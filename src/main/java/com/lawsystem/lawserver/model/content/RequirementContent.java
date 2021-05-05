@@ -11,9 +11,6 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 public class RequirementContent extends DescribedContent {
-    public RequirementContent() {
-        this.setType(LawType.REQUIREMENT);
-    }
     private Date due;
     @Override
     public String toString() {
