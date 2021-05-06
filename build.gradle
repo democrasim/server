@@ -33,6 +33,7 @@ dependencies {
     testImplementation group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.5.RELEASE'
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-undertow
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version: '2.4.5'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
 }
 

@@ -3,7 +3,6 @@ package com.lawsystem.lawserver.service.law_executors;
 import com.lawsystem.lawserver.model.ConfigurationLaws;
 import com.lawsystem.lawserver.model.content.ChangePresidentContent;
 import com.lawsystem.lawserver.model.content.LawContent;
-import com.lawsystem.lawserver.repo.ConfigurationLawsRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
