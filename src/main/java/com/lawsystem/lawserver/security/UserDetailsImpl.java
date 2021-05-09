@@ -1,4 +1,4 @@
-package com.lawsystem.lawserver.security.service;
+package com.lawsystem.lawserver.security;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,36 +14,40 @@ import java.util.Collection;
 @Data
 public class UserDetailsImpl implements UserDetails {
 
-    private String id;
-    private String username;
-    private String phone;
-    @JsonIgnore
-    private String password;
+    private Member member;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 
+    @Override
+    public String getPassword() {
+        return member.getLatestCode();
+    }
+
+    @Override
+    public String getUsername() {
+        return member.getPhone();
+    }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
-    }
-
-    public static UserDetailsImpl build(Member member) {
-
+        return true;
     }
 }
