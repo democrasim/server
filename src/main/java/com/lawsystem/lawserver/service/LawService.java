@@ -4,6 +4,7 @@ import com.lawsystem.lawserver.dto.LawProposition;
 import com.lawsystem.lawserver.exception.LawNotUnderVoteException;
 import com.lawsystem.lawserver.exception.UnregisteredMemberException;
 import com.lawsystem.lawserver.model.*;
+import com.lawsystem.lawserver.model.content.AddMemberContent;
 import com.lawsystem.lawserver.model.content.LawContent;
 import com.lawsystem.lawserver.repo.LawContentRepository;
 import com.lawsystem.lawserver.repo.LawRepository;
@@ -62,7 +63,7 @@ public class LawService {
     public Law proposeLaw(LawProposition proposition) throws UnregisteredMemberException {
         Member member = memberRepository.findById(proposition.getLegislator()).orElseThrow(IllegalArgumentException::new);
 
-        if (!member.isRegistered()) {
+        if (!member.isRegistered() && !(proposition.getContent() instanceof AddMemberContent)) {
             throw new UnregisteredMemberException();
         }
 
