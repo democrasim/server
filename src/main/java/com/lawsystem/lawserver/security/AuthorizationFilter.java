@@ -1,8 +1,10 @@
 package com.lawsystem.lawserver.security;
 
 import io.jsonwebtoken.Jwts;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -32,10 +34,12 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
+        Authentication contextAuthentication = SecurityContextHolder.getContext().getAuthentication();
 
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
+            UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
+
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
     }
 
