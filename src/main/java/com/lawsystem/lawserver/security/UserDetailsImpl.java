@@ -23,7 +23,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return member.getLatestCode() != null ? member.getLatestCode().getCode() : null;
+        return member.getLatestCode() != null ? "{noop}" + member.getLatestCode().getCode() : null;
     }
 
     @Override

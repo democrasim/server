@@ -1,5 +1,6 @@
 package com.lawsystem.lawserver.config;
 
+import com.lawsystem.lawserver.repo.MemberRepository;
 import com.lawsystem.lawserver.security.AuthenticationFilter;
 import com.lawsystem.lawserver.security.AuthorizationFilter;
 import com.lawsystem.lawserver.security.UserDetailsServiceImpl;
@@ -17,17 +18,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsServiceImpl userDetailsService;
+    private MemberRepository memberRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .mvcMatchers(HttpMethod.POST, "member/request_register").permitAll()
-                .mvcMatchers(HttpMethod.GET, "code/wa").permitAll()
-                .mvcMatchers(HttpMethod.POST, "login").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/member/request_register").permitAll()
+                .mvcMatchers(HttpMethod.GET, "/code/wa").permitAll()
                 .anyRequest().authenticated()
                 .and()
-        .addFilter(new AuthenticationFilter(authenticationManager()))
+        .addFilter(new AuthenticationFilter(authenticationManager(), memberRepository))
         .addFilter(new AuthorizationFilter(authenticationManager()))
         ;
 

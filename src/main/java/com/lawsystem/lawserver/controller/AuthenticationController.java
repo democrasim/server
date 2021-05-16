@@ -26,7 +26,7 @@ public class AuthenticationController {
 
         Member member = memberRepository.findByPhone(mobile);
 
-        if(member == null) return ResponseEntity.unprocessableEntity().body(null);
+        if(member == null) return ResponseEntity.unprocessableEntity().build();
 
         WhatsAppCode code = generateCode();
 
@@ -36,7 +36,7 @@ public class AuthenticationController {
 
         whatsAppService.sendCode(code, mobile);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok().build();
     }
 
     private WhatsAppCode generateCode() {

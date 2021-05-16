@@ -17,8 +17,8 @@ public class WhatsAppService {
     WhatsAppConfiguration configuration;
 
     public boolean sendCode(WhatsAppCode code, String phone) {
-        ResponseEntity<Void> entity = restTemplate.postForEntity(configuration.getServerUid(), new SendMessageFormat(
-                "Your access code is :" + code.getCode(),phone + "@c.us"), Void.class);
+        ResponseEntity<String> entity = restTemplate.postForEntity(configuration.getServerUid() + "/send_message", new SendMessageFormat(
+                "Your access code is :" + code.getCode(),phone + "@c.us"), String.class);
         return entity.getStatusCode().is2xxSuccessful();
     }
 }

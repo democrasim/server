@@ -34,7 +34,7 @@ public class Member {
 
     @JsonIgnore
     @Nullable
-    private WhatsAppCode latestCode;
+    private transient WhatsAppCode latestCode;
 
     private boolean registered;
 
