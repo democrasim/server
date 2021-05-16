@@ -28,6 +28,9 @@ public class WhatsAppConfiguration {
     @Value("${server:http://localhost:8081}")
     private String serverUid;
 
+    @Value("${apiKey:}")
+    private String apiKey;
+
     @PostConstruct
     public void afterInit() {
         System.out.println("Main Chat: " + mainChatId);
