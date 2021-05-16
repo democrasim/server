@@ -8,6 +8,7 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -18,12 +19,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
     public String getPassword() {
-        return member.getLatestCode();
+        return member.getLatestCode() != null ? member.getLatestCode().getCode() : null;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return member.getLatestCode() != null && !member.getLatestCode().expired();
     }
 
     @Override
