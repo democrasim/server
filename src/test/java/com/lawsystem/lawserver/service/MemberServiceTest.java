@@ -1,6 +1,5 @@
 package com.lawsystem.lawserver.service;
 
-import com.lawsystem.lawserver.model.LawVote;
 import com.lawsystem.lawserver.model.Member;
 import com.lawsystem.lawserver.repo.LawContentRepository;
 import com.lawsystem.lawserver.repo.LawRepository;
@@ -11,19 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 class MemberServiceTest {
 

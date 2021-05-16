@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
 @Data
 @Accessors(chain = true)
 public class AddMemberContent extends LawContent {

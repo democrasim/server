@@ -1,7 +1,6 @@
 package com.lawsystem.lawserver.controller;
 
 import com.lawsystem.lawserver.dto.LawDto;
-import com.lawsystem.lawserver.model.Law;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,25 +32,10 @@ class LawControllerTest {
 
     }
 
-    @Test
-    void testGetAllPassedLaws() {
-    }
-
-    @Test
-    void proposeBan() {
-    }
-
-    @Test
-    void proposeFact() {
-    }
 
     @BeforeEach
     public void before() {
 
     }
 
-    @Test
-    void vote()
-    {
-    }
 }

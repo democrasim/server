@@ -28,15 +28,15 @@ public class LawController {
 
     @GetMapping(path="with_status/{status}/", params = {"page", "limit"})
     public @ResponseBody List<LawDto> getAllLawsByStatus(@PathVariable("status") LawStatus status, int page, int limit) {
-        return lawsToDtos(lawService.getAllLawsByStatus(status, page, limit));
+        return lawsToDataTransferObjects(lawService.getAllLawsByStatus(status, page, limit));
     }
 
     @GetMapping(path="with_status/{status}/")
     public @ResponseBody List<LawDto> getAllLawsByStatus(@PathVariable("status") LawStatus status) {
-        return lawsToDtos(lawService.getAllLawsByStatus(status));
+        return lawsToDataTransferObjects(lawService.getAllLawsByStatus(status));
     }
 
-    private List<LawDto> lawsToDtos(List<Law> laws) {
+    private List<LawDto> lawsToDataTransferObjects(List<Law> laws) {
         return laws.stream()
                 .map(law -> modelMapper.map(law, LawDto.class).setContent(law.getContent()))
                 .peek(law -> law.setContentString(law.getContent().toString()))
@@ -46,19 +46,19 @@ public class LawController {
     @GetMapping(path="passed", params = {"page", "limit"})
     public @ResponseBody List<LawDto> getAllPassedLaws(int page, int limit) {
 
-        return lawsToDtos(lawService
+        return lawsToDataTransferObjects(lawService
                 .getAllLawsByStatus(LawStatus.PASSED, page,limit));
 
     }
 
     @GetMapping(path="not_voted")
-    public @ResponseBody List<LawDto> getAllUnvotedLaws(String userId) {
-        return lawsToDtos(lawService.getAllUnvotedLaws(userId));
+    public @ResponseBody List<LawDto> getAllNotVotedLaws(String userId) {
+        return lawsToDataTransferObjects(lawService.getAllUnvotedLaws(userId));
     }
 
     @GetMapping(path="passed")
     public @ResponseBody List<LawDto> getAllPassedLaws() {
-        return lawsToDtos(lawService.getAllLawsByStatus(LawStatus.PASSED));
+        return lawsToDataTransferObjects(lawService.getAllLawsByStatus(LawStatus.PASSED));
     }
 
     @PostMapping(path = "propose")

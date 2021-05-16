@@ -11,16 +11,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
-public class AddMemberExecutor implements LawExecutor{
-    @Autowired
-    private MemberRepository memberRepository;
-    private ConfigurationLawsRepository configurationLawsRepository;
+public class AddMemberExecutor implements LawExecutor {
+
+    private final MemberRepository memberRepository;
+    private final ConfigurationLawsRepository configurationLawsRepository;
     @Override
     public void execute(LawContent content) {
         ((AddMemberContent)content).getMember().setRegistered(true);
         memberRepository.save(((AddMemberContent)content).getMember());
-        //implement: send to whatsapp api
+        //implement: send to whatsApp api
     }
 
     @Override

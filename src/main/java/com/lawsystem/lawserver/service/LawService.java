@@ -3,18 +3,14 @@ package com.lawsystem.lawserver.service;
 import com.lawsystem.lawserver.dto.LawProposition;
 import com.lawsystem.lawserver.exception.LawNotUnderVoteException;
 import com.lawsystem.lawserver.exception.UnregisteredMemberException;
-import com.lawsystem.lawserver.model.Law;
-import com.lawsystem.lawserver.model.LawStatus;
-import com.lawsystem.lawserver.model.LawVote;
-import com.lawsystem.lawserver.model.Member;
-import com.lawsystem.lawserver.model.VoteType;
+import com.lawsystem.lawserver.model.*;
+import com.lawsystem.lawserver.model.content.AddMemberContent;
 import com.lawsystem.lawserver.model.content.LawContent;
 import com.lawsystem.lawserver.repo.LawContentRepository;
 import com.lawsystem.lawserver.repo.LawRepository;
 import com.lawsystem.lawserver.repo.LawVoteRepository;
 import com.lawsystem.lawserver.repo.MemberRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +63,7 @@ public class LawService {
     public Law proposeLaw(LawProposition proposition) throws UnregisteredMemberException {
         Member member = memberRepository.findById(proposition.getLegislator()).orElseThrow(IllegalArgumentException::new);
 
-        if (!member.isRegistered()) {
+        if (!member.isRegistered() && !(proposition.getContent() instanceof AddMemberContent)) {
             throw new UnregisteredMemberException();
         }
 

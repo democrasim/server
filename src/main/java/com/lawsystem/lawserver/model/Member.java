@@ -1,6 +1,7 @@
 package com.lawsystem.lawserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lawsystem.lawserver.dto.WhatsAppCode;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
@@ -30,6 +31,10 @@ public class Member {
     @JsonIgnore
     @Nullable
     private String token;
+
+    @JsonIgnore
+    @Nullable
+    private transient WhatsAppCode latestCode;
 
     private boolean registered;
 
