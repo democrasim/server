@@ -1,7 +1,6 @@
 package com.lawsystem.lawserver.security;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SigningKeyResolver;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,7 +10,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -49,7 +47,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
             String user = Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();
 
             if (user != null) {
-                // new arraylist means authorities
+                // new arrayList means authorities
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             }
 

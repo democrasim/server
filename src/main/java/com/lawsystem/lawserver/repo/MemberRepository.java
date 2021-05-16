@@ -2,8 +2,6 @@ package com.lawsystem.lawserver.repo;
 
 import com.lawsystem.lawserver.model.Member;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

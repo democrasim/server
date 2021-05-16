@@ -1,6 +1,5 @@
 package com.lawsystem.lawserver.service.law_executors;
 
-import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.content.AddMemberContent;
 import com.lawsystem.lawserver.model.content.ChangeMinMajorityForMemberJoiningContent;
 import com.lawsystem.lawserver.model.content.ChangePresidentContent;
@@ -18,11 +17,11 @@ public class MainExecutor {
     private AddMemberExecutor addMemberExecutor;
     private ChangePresidentExecutor changePresidentExecutor;
     private ChangeMinMajorityForMemberJoiningExecutor changeMinMajorityForMemberJoiningExecutor;
-    private Map<Class, LawExecutor> executors;
+    private Map<Class<? extends LawContent>, LawExecutor> executors;
 
     @PostConstruct
     private void initMap() {
-        executors = new HashMap<Class, LawExecutor>() {{
+        executors = new HashMap<Class<? extends LawContent>, LawExecutor>() {{
             put(ChangePresidentContent.class, changePresidentExecutor);
             put(AddMemberContent.class, addMemberExecutor);
             put(ChangeMinMajorityForMemberJoiningContent.class, changeMinMajorityForMemberJoiningExecutor);
@@ -36,7 +35,7 @@ public class MainExecutor {
         }
     }
 
-    public double getMinMajority(Class c) {
+    public double getMinMajority(Class<? extends  LawContent> c) {
         LawExecutor executor = executors.get(c);
         if (executor == null) {
             return 0.5;

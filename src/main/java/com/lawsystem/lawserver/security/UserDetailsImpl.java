@@ -1,7 +1,6 @@
 package com.lawsystem.lawserver.security;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lawsystem.lawserver.model.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;

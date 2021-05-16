@@ -2,7 +2,6 @@ package com.lawsystem.lawserver.config;
 
 import com.google.api.client.util.Value;
 import lombok.Data;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 

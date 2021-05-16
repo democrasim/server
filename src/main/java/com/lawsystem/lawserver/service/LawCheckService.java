@@ -2,29 +2,17 @@ package com.lawsystem.lawserver.service;
 
 import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.LawStatus;
-import com.lawsystem.lawserver.model.LawVote;
 import com.lawsystem.lawserver.model.VoteType;
-import com.lawsystem.lawserver.model.content.AddMemberContent;
-import com.lawsystem.lawserver.model.content.ChangePresidentContent;
-import com.lawsystem.lawserver.model.content.LawContent;
 import com.lawsystem.lawserver.repo.LawRepository;
 import com.lawsystem.lawserver.repo.LawVoteRepository;
-import com.lawsystem.lawserver.repo.MemberRepository;
-import com.lawsystem.lawserver.service.law_executors.AddMemberExecutor;
-import com.lawsystem.lawserver.service.law_executors.ChangePresidentExecutor;
-import com.lawsystem.lawserver.service.law_executors.LawExecutor;
 import com.lawsystem.lawserver.service.law_executors.MainExecutor;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.temporal.TemporalAmount;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +32,7 @@ public class LawCheckService {
                 law -> {
                     int supporting = lawVoteRepository.countAllByLawAndVote(law, VoteType.FOR);
                     int against = lawVoteRepository.countAllByLawAndVote(law, VoteType.AGAINST);
-                    if (supporting / (supporting + against) >= executor.getMinMajority(law.getContent().getClass())) {
+                    if ((double) supporting / (supporting + against) >= executor.getMinMajority(law.getContent().getClass())) {
                         law.setStatus(LawStatus.PASSED);
                         executor.execute(law.getContent());
                     } else {

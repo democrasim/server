@@ -2,13 +2,8 @@ package com.lawsystem.lawserver.controller;
 
 import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.Member;
-import com.lawsystem.lawserver.model.content.AddMemberContent;
-import com.lawsystem.lawserver.repo.LawContentRepository;
-import com.lawsystem.lawserver.repo.LawRepository;
-import com.lawsystem.lawserver.repo.MemberRepository;
 import com.lawsystem.lawserver.service.MemberService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
