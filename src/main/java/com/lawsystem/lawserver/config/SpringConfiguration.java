@@ -1,5 +1,7 @@
 package com.lawsystem.lawserver.config;
 
+import java.util.List;
+
 import com.lawsystem.lawserver.model.ConfigurationLaws;
 import com.lawsystem.lawserver.repo.ConfigurationLawsRepository;
 import lombok.AllArgsConstructor;
@@ -10,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.PostConstruct;
-import java.util.List;
 
 @AllArgsConstructor
 @Configuration

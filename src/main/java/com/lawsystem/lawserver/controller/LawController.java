@@ -1,6 +1,9 @@
 package com.lawsystem.lawserver.controller;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.lawsystem.lawserver.dto.LawDto;
 import com.lawsystem.lawserver.dto.LawProposition;
 import com.lawsystem.lawserver.dto.VoteDto;
@@ -13,9 +16,6 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Controller

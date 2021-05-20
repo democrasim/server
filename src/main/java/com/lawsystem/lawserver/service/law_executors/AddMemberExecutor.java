@@ -2,13 +2,10 @@ package com.lawsystem.lawserver.service.law_executors;
 
 import com.lawsystem.lawserver.model.Member;
 import com.lawsystem.lawserver.model.content.AddMemberContent;
-import com.lawsystem.lawserver.model.content.LawContent;
 import com.lawsystem.lawserver.repo.ConfigurationLawsRepository;
 import com.lawsystem.lawserver.repo.MemberRepository;
 import com.lawsystem.lawserver.service.WhatsAppService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

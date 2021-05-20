@@ -7,12 +7,11 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.lawsystem.lawserver.dto.ApiKeyDto;
 import com.lawsystem.lawserver.dto.LoginDto;
 import com.lawsystem.lawserver.model.Member;
-import com.lawsystem.lawserver.model.security.ApiKeyAuthenticationToken;
 import com.lawsystem.lawserver.repo.MemberRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,7 +19,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {

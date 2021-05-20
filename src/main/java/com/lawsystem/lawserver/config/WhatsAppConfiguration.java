@@ -1,13 +1,13 @@
 package com.lawsystem.lawserver.config;
 
+import javax.annotation.PostConstruct;
+
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 @Data
 @Component

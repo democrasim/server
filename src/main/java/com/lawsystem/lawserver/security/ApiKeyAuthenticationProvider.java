@@ -2,9 +2,7 @@ package com.lawsystem.lawserver.security;
 
 import com.lawsystem.lawserver.config.WhatsAppConfiguration;
 import com.lawsystem.lawserver.model.security.ApiKeyAuthenticationToken;
-import io.netty.util.internal.ObjectUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

@@ -1,10 +1,6 @@
 package com.lawsystem.lawserver.model.security;
 
-import java.util.Collection;
-
-import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.Transient;
 import org.springframework.security.core.authority.AuthorityUtils;
 

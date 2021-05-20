@@ -1,10 +1,10 @@
 package com.lawsystem.lawserver.model.content;
 
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

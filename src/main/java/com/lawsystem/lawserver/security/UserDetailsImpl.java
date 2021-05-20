@@ -1,14 +1,14 @@
 package com.lawsystem.lawserver.security;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.lawsystem.lawserver.model.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 @AllArgsConstructor
 @Data

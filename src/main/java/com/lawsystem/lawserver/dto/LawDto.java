@@ -1,14 +1,14 @@
 package com.lawsystem.lawserver.dto;
 
+import java.util.Date;
+import java.util.List;
+
 import com.lawsystem.lawserver.model.LawStatus;
 import com.lawsystem.lawserver.model.LawVote;
 import com.lawsystem.lawserver.model.Member;
 import com.lawsystem.lawserver.model.content.LawContent;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
-import java.util.List;
 
 @Data
 @Accessors(chain = true)

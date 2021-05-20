@@ -1,5 +1,8 @@
 package com.lawsystem.lawserver.model;
 
+import java.util.Date;
+import javax.annotation.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lawsystem.lawserver.dto.WhatsAppCode;
 import lombok.*;
@@ -7,10 +10,6 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.annotation.Nullable;
-
-import java.util.Date;
 
 @Data
 @RequiredArgsConstructor

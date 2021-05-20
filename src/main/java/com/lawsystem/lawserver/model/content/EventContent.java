@@ -1,8 +1,8 @@
 package com.lawsystem.lawserver.model.content;
 
-import org.springframework.data.geo.Point;
-
 import java.util.Date;
+
+import org.springframework.data.geo.Point;
 
 public class EventContent extends DescribedContent {
 

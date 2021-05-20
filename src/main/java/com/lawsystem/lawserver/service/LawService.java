@@ -1,5 +1,8 @@
 package com.lawsystem.lawserver.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.lawsystem.lawserver.dto.LawProposition;
 import com.lawsystem.lawserver.exception.LawNotUnderVoteException;
 import com.lawsystem.lawserver.exception.UnregisteredMemberException;
@@ -13,9 +16,6 @@ import com.lawsystem.lawserver.repo.MemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service

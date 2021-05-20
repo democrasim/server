@@ -1,12 +1,12 @@
 package com.lawsystem.lawserver.controller;
 
+import java.util.List;
+
 import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.Member;
 import com.lawsystem.lawserver.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor

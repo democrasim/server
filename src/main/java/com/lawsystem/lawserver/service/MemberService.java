@@ -1,5 +1,7 @@
 package com.lawsystem.lawserver.service;
 
+import java.util.List;
+
 import com.lawsystem.lawserver.dto.LawProposition;
 import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.Member;
@@ -8,8 +10,6 @@ import com.lawsystem.lawserver.repo.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor

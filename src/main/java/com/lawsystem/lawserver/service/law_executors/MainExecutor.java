@@ -1,16 +1,8 @@
 package com.lawsystem.lawserver.service.law_executors;
 
-import com.lawsystem.lawserver.model.content.AddMemberContent;
-import com.lawsystem.lawserver.model.content.ChangeMinMajorityForMemberJoiningContent;
-import com.lawsystem.lawserver.model.content.ChangePresidentContent;
 import com.lawsystem.lawserver.model.content.LawContent;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor

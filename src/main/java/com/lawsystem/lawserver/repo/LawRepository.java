@@ -1,14 +1,14 @@
 package com.lawsystem.lawserver.repo;
 
+import java.util.Date;
+import java.util.List;
+
 import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.LawStatus;
 import com.lawsystem.lawserver.model.Member;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Date;
-import java.util.List;
 
 @Repository
 public interface LawRepository extends MongoRepository<Law, String> {
