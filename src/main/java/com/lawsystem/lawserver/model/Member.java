@@ -39,5 +39,5 @@ public class Member {
     private boolean registered;
 
     @CreatedDate
-    private Date joined;
+    private Date joined = new Date();
 }

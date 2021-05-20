@@ -37,3 +37,5 @@ out/
 .vscode/
 
 firebase-service-account.json
+
+whats_app.properties
