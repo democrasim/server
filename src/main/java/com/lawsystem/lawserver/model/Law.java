@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,8 +19,13 @@ import java.util.List;
 @Accessors(chain = true)
 public class Law {
 
+    @Transient
+    public static final String SEQUENCE_NAME = "law_sequence";
+
     @Id
     private String id;
+
+    private long number;
 
     @DBRef
     private Member legislator;

@@ -32,11 +32,12 @@ public class LawCheckService {
                 law -> {
                     int supporting = lawVoteRepository.countAllByLawAndVote(law, VoteType.FOR);
                     int against = lawVoteRepository.countAllByLawAndVote(law, VoteType.AGAINST);
-                    if ((double) supporting / (supporting + against) >= executor.getMinMajority(law.getContent().getClass())) {
+                    if ((double) supporting / (supporting + against) > executor.getMinMajority(law.getContent().getClass())) {
                         law.setStatus(LawStatus.PASSED);
                         executor.execute(law.getContent());
                     } else {
                         law.setStatus(LawStatus.FAILED);
+                        executor.failed(law.getContent());
                     }
                     lawRepository.save(law);
                 }

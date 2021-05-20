@@ -26,10 +26,9 @@ public class MemberService {
 
         LawProposition proposition = new LawProposition();
         proposition.setLegislator(member.getId());
-        proposition.setReason(reason);
         proposition.setAnonymous(false);
         proposition.setFakeName("");
-        proposition.setContent(new AddMemberContent().setMember(member));
+        proposition.setContent(new AddMemberContent().setMember(member).setReason(reason));
 
         return lawService.proposeLaw(proposition);
     }

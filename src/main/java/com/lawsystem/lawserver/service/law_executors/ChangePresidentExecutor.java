@@ -11,15 +11,20 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChangePresidentExecutor implements LawExecutor {
+public class ChangePresidentExecutor implements LawExecutor<ChangePresidentContent> {
     private ConfigurationLawsRepository configurationLawsRepository;
 
     @Override
-    public void execute(LawContent content) {
+    public void execute(ChangePresidentContent content) {
         //configurationLawsRepository.save(new ConfigurationLaws(new Member("gil","5"), 24));
         ConfigurationLaws configurationLaws = configurationLawsRepository.findAll().get(0);
-        configurationLaws.setPresident(((ChangePresidentContent) content).getNewPresident());
+        configurationLaws.setPresident(content.getNewPresident());
         configurationLawsRepository.save(configurationLaws);
+    }
+
+    @Override
+    public void failed(ChangePresidentContent content) {
+
     }
 
     @Override

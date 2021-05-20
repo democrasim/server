@@ -9,14 +9,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ChangeMinMajorityForMemberJoiningExecutor implements LawExecutor{
+public class ChangeMinMajorityForMemberJoiningExecutor implements LawExecutor<ChangeMinMajorityForMemberJoiningContent> {
     private ConfigurationLawsRepository configurationLawsRepository;
     @Override
-    public void execute(LawContent content) {
-        ChangeMinMajorityForMemberJoiningContent changeMinMajorityForMemberJoiningContent=(ChangeMinMajorityForMemberJoiningContent) content;
+    public void execute(ChangeMinMajorityForMemberJoiningContent content) {
         ConfigurationLaws configurationLaws=configurationLawsRepository.findAll().get(0);
-        configurationLaws.setMinMajorityForMemberJoining(changeMinMajorityForMemberJoiningContent.getMin());
+        configurationLaws.setMinMajorityForMemberJoining(content.getMin());
         configurationLawsRepository.save(configurationLaws);
+    }
+
+    @Override
+    public void failed(ChangeMinMajorityForMemberJoiningContent content) {
+
     }
 
     @Override

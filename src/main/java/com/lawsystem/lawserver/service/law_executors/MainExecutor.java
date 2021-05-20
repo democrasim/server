@@ -5,6 +5,7 @@ import com.lawsystem.lawserver.model.content.ChangeMinMajorityForMemberJoiningCo
 import com.lawsystem.lawserver.model.content.ChangePresidentContent;
 import com.lawsystem.lawserver.model.content.LawContent;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,29 +15,26 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class MainExecutor {
-    private AddMemberExecutor addMemberExecutor;
-    private ChangePresidentExecutor changePresidentExecutor;
-    private ChangeMinMajorityForMemberJoiningExecutor changeMinMajorityForMemberJoiningExecutor;
-    private Map<Class<? extends LawContent>, LawExecutor> executors;
 
-    @PostConstruct
-    private void initMap() {
-        executors = new HashMap<Class<? extends LawContent>, LawExecutor>() {{
-            put(ChangePresidentContent.class, changePresidentExecutor);
-            put(AddMemberContent.class, addMemberExecutor);
-            put(ChangeMinMajorityForMemberJoiningContent.class, changeMinMajorityForMemberJoiningExecutor);
-        }};
-    }
+    private ExecutorMap executorMap;
 
-    public void execute(LawContent content) {
-        LawExecutor executor = executors.get(content.getClass());
+
+
+    public <T extends LawContent> void execute(T content) {
+        LawExecutor<T> executor = (LawExecutor<T>) executorMap.get(content.getClass());
         if (executor != null) {
             executor.execute(content);
         }
     }
 
-    public double getMinMajority(Class<? extends  LawContent> c) {
-        LawExecutor executor = executors.get(c);
+    public <T extends LawContent> void failed(T content) {
+        LawExecutor<T> executor = (LawExecutor<T>) executorMap.get(content.getClass());
+        if (executor != null) {
+            executor.failed(content);
+        }
+    }
+    public <T extends LawContent> double getMinMajority(Class<T> c) {
+        LawExecutor<T> executor = executorMap.get(c);
         if (executor == null) {
             return 0.5;
         }

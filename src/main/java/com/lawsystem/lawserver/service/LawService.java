@@ -25,6 +25,7 @@ public class LawService {
     final LawVoteRepository lawVoteRepository;
     final LawRepository lawRepository;
     final LawContentRepository lawContentRepository;
+    final SequenceGeneratorService sequenceGeneratorService;
 
     public Law vote(String law, String member, VoteType type, String reason) throws UnregisteredMemberException, LawNotUnderVoteException {
         Law lawObject = lawRepository
@@ -68,6 +69,8 @@ public class LawService {
         }
 
         Law law = proposition.toLaw();
+
+        law.setNumber(sequenceGeneratorService.generateSequence(Law.SEQUENCE_NAME));
 
         law.setLegislator(member);
 
