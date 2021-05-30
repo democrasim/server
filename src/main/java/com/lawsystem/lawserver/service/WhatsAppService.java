@@ -3,6 +3,7 @@ package com.lawsystem.lawserver.service;
 import com.lawsystem.lawserver.config.WhatsAppConfiguration;
 import com.lawsystem.lawserver.dto.WhatsAppCode;
 import com.lawsystem.lawserver.dto.wa.SendMessageFormat;
+import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.Member;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,18 @@ public class WhatsAppService {
                 "Your access code for 🛂 Democrasim is\n"
                         + code.getCode()
                         + "\n\n_if this was not you please ignore this._", phone + "@c.us"), String.class);
+        return entity.getStatusCode().is2xxSuccessful();
+    }
+
+    public boolean sendFinishedLaw(Law law) {
+        ResponseEntity<String> entity = restTemplate.postForEntity(configuration.getServerUid() + "/send_message", new SendMessageFormat(
+                "*Law #" + law.getNumber() + "*\n"
+                        + "*Legislator:* " + law.getLegislator().getName() + "\n\n"
+                        + law.getContent().toString() + "\n"
+                        + "*Status:* " + law.getStatus(),
+                configuration.getMainChatId()), String.class
+        );
+
         return entity.getStatusCode().is2xxSuccessful();
     }
 }

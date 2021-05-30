@@ -42,4 +42,8 @@ public class MemberService {
     public List<Member> allUsers() {
         return memberRepository.findAll();
     }
+
+    public Member byId(String id) {
+        return memberRepository.findById(id).orElse(null);
+    }
 }

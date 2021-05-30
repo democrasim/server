@@ -7,6 +7,6 @@ import lombok.experimental.Accessors;
 
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@Data
 public class BanContent extends DescribedContent {
+
 }

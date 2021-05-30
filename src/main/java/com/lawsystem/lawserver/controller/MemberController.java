@@ -31,5 +31,10 @@ public class MemberController {
         return memberService.requestRegister(name, phone, reason);
     }
 
+    @GetMapping(path = "by_id/{id}")
+    public @ResponseBody Member byId(@PathVariable("id") String id) {
+        return memberService.byId(id);
+    }
+
     
 }

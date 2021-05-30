@@ -22,6 +22,7 @@ public class LawCheckService {
     private final MainExecutor executor;
     private final LawRepository lawRepository;
     private final LawVoteRepository lawVoteRepository;
+    private final WhatsAppService whatsAppService;
 
     @Scheduled(fixedRate = 10000)
     public void checkLaws() {
@@ -39,6 +40,9 @@ public class LawCheckService {
                         law.setStatus(LawStatus.FAILED);
                         executor.failed(law.getContent());
                     }
+
+                    whatsAppService.sendFinishedLaw(law);
+
                     lawRepository.save(law);
                 }
         );

@@ -10,8 +10,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = AddMemberContent.class, name = "AddMember"),
-        @JsonSubTypes.Type(value = FactContent.class, name = "Fact")
+        @JsonSubTypes.Type(value = AddMemberContent.class, name = "ADD_MEMBER"),
+        @JsonSubTypes.Type(value = FactContent.class, name = "FACT")
 })
 public class LawContent {
 }

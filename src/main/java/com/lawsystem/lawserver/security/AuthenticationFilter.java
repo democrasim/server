@@ -3,6 +3,7 @@ package com.lawsystem.lawserver.security;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -64,7 +65,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         memberRepository.save(member);
 
-        response.addHeader("Authorization", "Bearer " + token);
-        response.getWriter().write((new Gson()).toJson(member));
+        HashMap<String, Object> map = new HashMap<>();
+
+        map.put("member", member);
+        map.put("token", token);
+
+        response.getWriter().write((new Gson()).toJson(map));
     }
 }

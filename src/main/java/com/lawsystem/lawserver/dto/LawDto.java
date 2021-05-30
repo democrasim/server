@@ -16,6 +16,8 @@ public class LawDto {
 
     private String id;
 
+    private long number;
+
     private Member legislator;
 
     private LawContent content;
