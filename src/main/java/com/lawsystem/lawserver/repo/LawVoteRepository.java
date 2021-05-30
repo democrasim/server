@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface LawVoteRepository extends MongoRepository<LawVote, String> {
 
     Optional<LawVote> getByLawAndVoter(Law law, Member member);
+
     List<LawVote> findAllByLaw(Law law);
 
     int countAllByLawAndVote(Law law, VoteType type);

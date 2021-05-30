@@ -13,27 +13,40 @@ import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.LawStatus;
 import com.lawsystem.lawserver.service.LawService;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping(path="laws")
+@RequestMapping(path = "laws")
 public class LawController {
 
     final LawService lawService;
     final ModelMapper modelMapper;
 
 
-    @GetMapping(path="with_status/{status}/", params = {"page", "limit"})
-    public @ResponseBody List<LawDto> getAllLawsByStatus(@PathVariable("status") LawStatus status, int page, int limit) {
-        return lawsToDataTransferObjects(lawService.getAllLawsByStatus(status, page, limit));
+    @GetMapping(path = "with_status/{status}/", params = {"page", "limit"})
+    public @ResponseBody
+    List<LawDto> getAllLawsByStatus(@PathVariable("status") LawStatus status, int page, int limit, @RequestParam(required = false) String userId) {
+        List<Law> laws = lawService.getAllLawsByStatus(status, page, limit);
+
+        if (StringUtils.isBlank(userId)) {
+            return lawsToDataTransferObjects(laws);
+        }
+        return lawsToDataTransferObjectsById(laws, userId);
     }
 
-    @GetMapping(path="with_status/{status}/")
-    public @ResponseBody List<LawDto> getAllLawsByStatus(@PathVariable("status") LawStatus status) {
-        return lawsToDataTransferObjects(lawService.getAllLawsByStatus(status));
+    @GetMapping(path = "with_status/{status}/")
+    public @ResponseBody
+    List<LawDto> getAllLawsByStatus(@PathVariable("status") LawStatus status, @RequestParam(required = false) String userId) {
+        List<Law> laws = lawService.getAllLawsByStatus(status);
+
+        if (StringUtils.isBlank(userId)) {
+            return lawsToDataTransferObjects(laws);
+        }
+        return lawsToDataTransferObjectsById(laws, userId);
     }
 
     private List<LawDto> lawsToDataTransferObjects(List<Law> laws) {
@@ -43,32 +56,30 @@ public class LawController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(path="passed", params = {"page", "limit"})
-    public @ResponseBody List<LawDto> getAllPassedLaws(int page, int limit) {
-
-        return lawsToDataTransferObjects(lawService
-                .getAllLawsByStatus(LawStatus.PASSED, page,limit));
-
+    private List<LawDto> lawsToDataTransferObjectsById(List<Law> laws, String userId) {
+        return laws.stream()
+                .map(law -> modelMapper.map(law, LawDto.class).setContent(law.getContent()))
+                .peek(law -> law.setContentString(law.getContent().toString()))
+                .peek(law -> law.getVotes().stream().filter(vote -> vote.getVoter().getId().equals(userId)).findAny().ifPresent(law::setUserVote))
+                .collect(Collectors.toList());
     }
 
-    @GetMapping(path="not_voted")
-    public @ResponseBody List<LawDto> getAllNotVotedLaws(String userId) {
-        return lawsToDataTransferObjects(lawService.getAllUnvotedLaws(userId));
-    }
-
-    @GetMapping(path="passed")
-    public @ResponseBody List<LawDto> getAllPassedLaws() {
-        return lawsToDataTransferObjects(lawService.getAllLawsByStatus(LawStatus.PASSED));
+    @GetMapping(path = "not_voted")
+    public @ResponseBody
+    List<LawDto> getAllNotVotedLaws(String userId) {
+        return lawsToDataTransferObjectsById(lawService.getAllUnvotedLaws(userId), userId);
     }
 
     @PostMapping(path = "propose")
-    public @ResponseBody LawDto propose(@RequestBody LawProposition proposition) throws UnregisteredMemberException {
+    public @ResponseBody
+    LawDto propose(@RequestBody LawProposition proposition) throws UnregisteredMemberException {
         return modelMapper.map(lawService.proposeLaw(proposition), LawDto.class);
     }
 
-    @PutMapping(path="vote")
-    public @ResponseBody Law vote(@RequestBody VoteDto vote) throws UnregisteredMemberException, LawNotUnderVoteException {
-        return lawService.vote(vote.getLaw(),vote.getMember(), vote.getType(), vote.getReason());
+    @PutMapping(path = "vote")
+    public @ResponseBody
+    Law vote(@RequestBody VoteDto vote) throws UnregisteredMemberException, LawNotUnderVoteException {
+        return lawService.vote(vote.getLaw(), vote.getMember(), vote.getType(), vote.getReason());
     }
 
 }

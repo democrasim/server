@@ -19,7 +19,7 @@ public class ExecutorMap {
 
     @SuppressWarnings("unchecked")
     public <T extends LawContent> LawExecutor<T> get(Class<T> clazz) {
-        if(executors.containsKey(clazz))
+        if (executors.containsKey(clazz))
             return (LawExecutor<T>) executors.get(clazz);
         return null;
     }

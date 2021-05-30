@@ -35,4 +35,6 @@ public class LawDto {
     private String fakeName = "";
 
     private String contentString;
+
+    private LawVote userVote;
 }

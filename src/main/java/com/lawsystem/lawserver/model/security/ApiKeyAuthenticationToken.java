@@ -13,6 +13,7 @@ public class ApiKeyAuthenticationToken extends AbstractAuthenticationToken {
         this.apiKey = apiKey;
         setAuthenticated(authenticated);
     }
+
     public ApiKeyAuthenticationToken(String apiKey) {
         this(apiKey, false);
     }
@@ -20,7 +21,6 @@ public class ApiKeyAuthenticationToken extends AbstractAuthenticationToken {
     public ApiKeyAuthenticationToken() {
         this(null, false);
     }
-
 
 
     @Override

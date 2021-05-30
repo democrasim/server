@@ -13,18 +13,14 @@ import org.springframework.lang.Nullable;
 @Document
 @Accessors(chain = true)
 public class LawVote {
-    @Id
-    private String id;
-
     @DBRef
     Member voter;
-
     @DBRef
     @JsonIgnore
     Law law;
-
     VoteType vote;
-
+    @Id
+    private String id;
     @Nullable
     private String reason;
 }

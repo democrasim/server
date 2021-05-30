@@ -2,19 +2,20 @@ package com.lawsystem.lawserver.service.law_executors;
 
 import com.lawsystem.lawserver.model.ConfigurationLaws;
 import com.lawsystem.lawserver.model.content.ChangeMinMajorityForMemberJoiningContent;
-import com.lawsystem.lawserver.repo.ConfigurationLawsRepository;
+import com.lawsystem.lawserver.service.VariableService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class ChangeMinMajorityForMemberJoiningExecutor implements LawExecutor<ChangeMinMajorityForMemberJoiningContent> {
-    private ConfigurationLawsRepository configurationLawsRepository;
+    private final VariableService variableService;
+
     @Override
     public void execute(ChangeMinMajorityForMemberJoiningContent content) {
-        ConfigurationLaws configurationLaws=configurationLawsRepository.findAll().get(0);
+        ConfigurationLaws configurationLaws = variableService.getInstance();
         configurationLaws.setMinMajorityForMemberJoining(content.getMin());
-        configurationLawsRepository.save(configurationLaws);
+        variableService.save(configurationLaws);
     }
 
     @Override

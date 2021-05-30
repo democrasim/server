@@ -11,7 +11,6 @@ public class MainExecutor {
     private ExecutorMap executorMap;
 
 
-
     public <T extends LawContent> void execute(T content) {
         LawExecutor<T> executor = (LawExecutor<T>) executorMap.get(content.getClass());
         if (executor != null) {
@@ -25,6 +24,7 @@ public class MainExecutor {
             executor.failed(content);
         }
     }
+
     public <T extends LawContent> double getMinMajority(Class<T> c) {
         LawExecutor<T> executor = executorMap.get(c);
         if (executor == null) {

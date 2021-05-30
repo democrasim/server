@@ -2,8 +2,8 @@ package com.lawsystem.lawserver.service.law_executors;
 
 import com.lawsystem.lawserver.model.Member;
 import com.lawsystem.lawserver.model.content.AddMemberContent;
-import com.lawsystem.lawserver.repo.ConfigurationLawsRepository;
 import com.lawsystem.lawserver.repo.MemberRepository;
+import com.lawsystem.lawserver.service.VariableService;
 import com.lawsystem.lawserver.service.WhatsAppService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,8 @@ public class AddMemberExecutor implements LawExecutor<AddMemberContent> {
 
     private final WhatsAppService whatsAppService;
     private final MemberRepository memberRepository;
-    private final ConfigurationLawsRepository configurationLawsRepository;
+    private final VariableService variableService;
+
     @Override
     public void execute(AddMemberContent content) {
 
@@ -32,6 +33,6 @@ public class AddMemberExecutor implements LawExecutor<AddMemberContent> {
 
     @Override
     public double getMinMajority() {
-        return configurationLawsRepository.findAll().get(0).getMinMajorityForMemberJoining();
+        return variableService.getInstance().getMinMajorityForMemberJoining();
     }
 }

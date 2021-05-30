@@ -1,5 +1,8 @@
 package com.lawsystem.lawserver.service;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.lawsystem.lawserver.model.Member;
 import com.lawsystem.lawserver.repo.LawContentRepository;
 import com.lawsystem.lawserver.repo.LawRepository;
@@ -10,9 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
@@ -56,12 +56,10 @@ class MemberServiceTest {
 
     @Test
     void requestRegister() {
-        String name = "name" ;
+        String name = "name";
         String phone = "phone";
 
         when(memberRepository.save(any())).thenReturn(member);
-
-
 
 
         verify(memberRepository).save(any());
@@ -73,7 +71,7 @@ class MemberServiceTest {
         List<Member> list = Collections.singletonList(new Member("a", "0").setRegistered(true));
 
         when(memberRepository.findAll())
-            .thenReturn(list);
+                .thenReturn(list);
 
         assertSame(memberService.allUsers(), list);
 

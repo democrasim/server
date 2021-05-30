@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ChangePresidentContent extends LawContent{
+public class ChangePresidentContent extends LawContent {
     @DBRef
     private Member newPresident;
     private String reason;

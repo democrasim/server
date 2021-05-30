@@ -25,13 +25,14 @@ public class ApiKeyAuthenticationProvider implements AuthenticationProvider {
 
         Authentication contextAuthentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(contextAuthentication
-                .isAuthenticated() && !(contextAuthentication instanceof AnonymousAuthenticationToken)) return contextAuthentication;
+        if (contextAuthentication
+                .isAuthenticated() && !(contextAuthentication instanceof AnonymousAuthenticationToken))
+            return contextAuthentication;
 
-        if(ObjectUtils.isEmpty(apiKey)) {
+        if (ObjectUtils.isEmpty(apiKey)) {
             throw new InsufficientAuthenticationException("No API key in request");
         } else {
-            if(whatsAppConfiguration.getApiKey().equals(apiKey)) {
+            if (whatsAppConfiguration.getApiKey().equals(apiKey)) {
                 return new ApiKeyAuthenticationToken(apiKey, true);
             }
             throw new BadCredentialsException("API Key is invalid");

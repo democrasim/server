@@ -14,22 +14,19 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:whats_app.properties")
 public class WhatsAppConfiguration {
 
+    @Value("${passedLaws:}")
+    private String mainChatId;
+    @Value("${councilChat:}")
+    private String councilChatId;
+    @Value("${server:http://localhost:8081}")
+    private String serverUid;
+    @Value("${apiKey:}")
+    private String apiKey;
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
-
-    @Value("${passedLaws:}")
-    private String mainChatId;
-
-    @Value("${councilChat:}")
-    private String councilChatId;
-
-    @Value("${server:http://localhost:8081}")
-    private String serverUid;
-
-    @Value("${apiKey:}")
-    private String apiKey;
 
     @PostConstruct
     public void afterInit() {

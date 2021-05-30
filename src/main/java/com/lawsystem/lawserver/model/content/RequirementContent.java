@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class RequirementContent extends DescribedContent {
     private Date due;
+
     @Override
     public String toString() {
         return super.toString();

@@ -17,18 +17,17 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import static com.lawsystem.lawserver.security.SecurityConstants.SECRET_KEY;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter {
+    private static final String HEADER_STRING = "Authorization";
+    private static final String PREFIX = "Bearer ";
     public AuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
-
-    private static final String HEADER_STRING = "Authorization";
-    private static final String PREFIX = "Bearer ";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader("Authorization");
 
-        if(header == null || !header.startsWith(PREFIX)) {
+        if (header == null || !header.startsWith(PREFIX)) {
             chain.doFilter(request, response);
             return;
         }
@@ -36,9 +35,9 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         Authentication contextAuthentication = SecurityContextHolder.getContext().getAuthentication();
 
 
-            UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
+        UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
 
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
     }
 

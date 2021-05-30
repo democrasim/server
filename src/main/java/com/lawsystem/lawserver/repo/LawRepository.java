@@ -14,9 +14,11 @@ import org.springframework.stereotype.Repository;
 public interface LawRepository extends MongoRepository<Law, String> {
 
     List<Law> findAllByLegislator(Member user);
+
     List<Law> findAllByLegislator(Member user, Pageable pageable);
 
     List<Law> findAllByStatus(LawStatus status);
+
     List<Law> findAllByStatus(LawStatus status, Pageable pageable);
 
     List<Law> findAllByTimestampBeforeAndStatus(Date timestamp, LawStatus status);

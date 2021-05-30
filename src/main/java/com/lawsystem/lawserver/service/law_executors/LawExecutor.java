@@ -6,6 +6,7 @@ public interface LawExecutor<T extends LawContent> {
     default void execute(T content) {
 
     }
+
     default void failed(T content) {
 
     }

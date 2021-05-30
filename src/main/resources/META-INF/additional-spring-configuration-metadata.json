@@ -4,5 +4,6 @@
       "name": "wa-api-key",
       "type": "java.lang.String",
       "description": "Description for wa-api-key."
-  }
-] }
+    }
+  ]
+}

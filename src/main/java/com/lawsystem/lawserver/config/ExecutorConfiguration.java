@@ -17,6 +17,7 @@ public class ExecutorConfiguration {
     private AddMemberExecutor addMemberExecutor;
     private ChangePresidentExecutor changePresidentExecutor;
     private ChangeMinMajorityForMemberJoiningExecutor changeMinMajorityForMemberJoiningExecutor;
+
     @Bean
     public ExecutorMap executorMap() {
         return new ExecutorMap() {{

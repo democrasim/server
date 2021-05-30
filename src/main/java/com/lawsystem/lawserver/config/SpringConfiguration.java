@@ -1,9 +1,7 @@
 package com.lawsystem.lawserver.config;
 
-import java.util.List;
-
 import com.lawsystem.lawserver.model.ConfigurationLaws;
-import com.lawsystem.lawserver.repo.ConfigurationLawsRepository;
+import com.lawsystem.lawserver.service.VariableService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -16,6 +14,8 @@ import org.springframework.web.client.RestTemplate;
 @AllArgsConstructor
 @Configuration
 public class SpringConfiguration {
+    private final VariableService variableService;
+
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
@@ -26,18 +26,15 @@ public class SpringConfiguration {
         return builder.build();
     }
 
-    ConfigurationLawsRepository configurationLawsRepository;
-
     @EventListener(ApplicationReadyEvent.class)
     public void init() {
-        List<ConfigurationLaws> list = configurationLawsRepository.findAll();
-        if(list.isEmpty()) {
+        if (!variableService.hasInstance()) {
             ConfigurationLaws laws = new ConfigurationLaws();
             laws.setMinMajorityForMemberJoining(.5);
             laws.setPresident(null);
             laws.setTimeForLawsToPass(10000);
 
-            configurationLawsRepository.save(laws);
+            variableService.save(laws);
         }
     }
 }

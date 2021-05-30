@@ -34,7 +34,6 @@ public class MemberService {
     }
 
 
-
     public List<Member> allUsers(boolean registered) {
         return memberRepository.findAllByRegistered(registered);
     }

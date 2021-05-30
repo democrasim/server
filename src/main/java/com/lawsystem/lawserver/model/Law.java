@@ -33,12 +33,14 @@ public class Law {
     private LawContent content;
 
     @DBRef
-    private List<LawVote> votes=new ArrayList<>();
+    private List<LawVote> votes = new ArrayList<>();
 
     private LawStatus status = LawStatus.UNDER_VOTE;
 
     @CreatedDate
     private Date timestamp = new Date();
+
+    private Date resolveTime;
 
     private boolean anonymousLegislator = false;
 

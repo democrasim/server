@@ -15,7 +15,7 @@ public class LawModelListener extends AbstractMongoEventListener<Law> {
 
     @Override
     public void onBeforeConvert(BeforeConvertEvent<Law> event) {
-        if(event.getSource().getNumber() < 1) {
+        if (event.getSource().getNumber() < 1) {
             event.getSource().setNumber(sequenceGeneratorService.generateSequence(Law.SEQUENCE_NAME));
         }
     }
