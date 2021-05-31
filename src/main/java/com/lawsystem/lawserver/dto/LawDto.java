@@ -26,6 +26,7 @@ public class LawDto {
 
     private LawStatus status = LawStatus.UNDER_VOTE;
 
+    private Date resolveTime;
     private Date timestamp;
 
     private boolean constitutional = false;

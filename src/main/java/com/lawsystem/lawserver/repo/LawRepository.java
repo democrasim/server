@@ -23,4 +23,6 @@ public interface LawRepository extends MongoRepository<Law, String> {
 
     List<Law> findAllByTimestampBeforeAndStatus(Date timestamp, LawStatus status);
 
+    List<Law> findAllByResolveTimeBeforeAndStatus(Date resolveTime, LawStatus status);
+
 }

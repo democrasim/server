@@ -26,9 +26,7 @@ public class LawCheckService {
 
     @Scheduled(fixedRate = 10000)
     public void checkLaws() {
-        long DAY_IN_MS = 1000;
-        Date dayAgo = new Date(System.currentTimeMillis() - DAY_IN_MS);
-        List<Law> laws = lawRepository.findAllByTimestampBeforeAndStatus(dayAgo, LawStatus.UNDER_VOTE);
+        List<Law> laws = lawRepository.findAllByResolveTimeBeforeAndStatus(new Date(), LawStatus.UNDER_VOTE);
         laws.forEach(
                 law -> {
                     int supporting = lawVoteRepository.countAllByLawAndVote(law, VoteType.FOR);

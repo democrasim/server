@@ -64,6 +64,15 @@ public class LawController {
                 .collect(Collectors.toList());
     }
 
+    private LawDto lawToDataTransferObject(Law law, String userId) {
+        LawDto output = modelMapper.map(law, LawDto.class).setContent(law.getContent());
+        output.setContentString(law.getContent().toString());
+        if(userId != null) {
+            output.getVotes().stream().filter(vote -> vote.getVoter().getId().equals(userId)).findAny().ifPresent(output::setUserVote);
+        }
+        return output;
+    }
+
     @GetMapping(path = "not_voted")
     public @ResponseBody
     List<LawDto> getAllNotVotedLaws(String userId) {
@@ -78,8 +87,8 @@ public class LawController {
 
     @PutMapping(path = "vote")
     public @ResponseBody
-    Law vote(@RequestBody VoteDto vote) throws UnregisteredMemberException, LawNotUnderVoteException {
-        return lawService.vote(vote.getLaw(), vote.getMember(), vote.getType(), vote.getReason());
+    LawDto vote(@RequestBody VoteDto vote) throws UnregisteredMemberException, LawNotUnderVoteException {
+        return lawToDataTransferObject(lawService.vote(vote.getLaw(), vote.getMember(), vote.getType(), vote.getReason()), vote.getMember());
     }
 
 }

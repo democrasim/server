@@ -1,5 +1,6 @@
 package com.lawsystem.lawserver.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ public class LawService {
     final LawRepository lawRepository;
     final LawContentRepository lawContentRepository;
     final SequenceGeneratorService sequenceGeneratorService;
+    final VariableService variableService;
 
     public Law vote(String law, String member, VoteType type, String reason) throws UnregisteredMemberException, LawNotUnderVoteException {
         Law lawObject = lawRepository
@@ -74,6 +76,11 @@ public class LawService {
 
         law.setLegislator(member);
 
+        int time = variableService.getInstance().getTimeForLawsToPass();
+
+        Date finished = new Date(law.getTimestamp().getTime() + time);
+
+        law.setResolveTime(finished);
 
         LawContent content = proposition.getContent();
         law.setContent(content);
