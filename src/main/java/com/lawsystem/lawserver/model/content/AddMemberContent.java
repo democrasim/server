@@ -19,6 +19,6 @@ public class AddMemberContent extends LawContent {
 
     @Override
     public String toString() {
-        return "Add new member: " + member.getName();
+        return member.getName() + " with phone number " + member.getPhone() + " will be added to Democrasim";
     }
 }

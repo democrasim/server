@@ -17,6 +17,7 @@ public interface MemberRepository extends MongoRepository<Member, String> {
     List<Member> findAll();
 
     List<Member> findAllByNameContaining(String name);
+    List<Member> findAllByName(String name);
 
     List<Member> findAllByRegistered(boolean registered);
 }

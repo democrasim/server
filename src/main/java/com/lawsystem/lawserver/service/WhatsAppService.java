@@ -1,6 +1,7 @@
 package com.lawsystem.lawserver.service;
 
 import com.lawsystem.lawserver.config.WhatsAppConfiguration;
+import com.lawsystem.lawserver.dto.LawDto;
 import com.lawsystem.lawserver.dto.WhatsAppCode;
 import com.lawsystem.lawserver.dto.wa.SendMessageFormat;
 import com.lawsystem.lawserver.model.Law;
@@ -38,11 +39,11 @@ public class WhatsAppService {
         return entity.getStatusCode().is2xxSuccessful();
     }
 
-    public boolean sendFinishedLaw(Law law) {
+    public boolean sendFinishedLaw(LawDto law) {
         ResponseEntity<String> entity = restTemplate.postForEntity(configuration.getServerUid() + "/send_message", new SendMessageFormat(
                 "*Law #" + law.getNumber() + "*\n"
                         + "*Legislator:* " + law.getLegislator().getName() + "\n\n"
-                        + law.getContent().toString() + "\n"
+                        + law.getContentString() + "\n"
                         + "*Status:* " + law.getStatus(),
                 configuration.getMainChatId()), String.class
         );

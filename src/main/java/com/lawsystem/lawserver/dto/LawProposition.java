@@ -4,12 +4,15 @@ import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.content.LawContent;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class LawProposition {
     private String legislator;
+    private String title;
     private boolean anonymous;
     private String fakeName;
-    private LawContent content;
+    private List<LawContent> content;
 
     public Law toLaw() {
         Law law = new Law();
@@ -17,9 +20,5 @@ public class LawProposition {
         law.setAnonymousLegislator(anonymous);
 
         return law;
-    }
-
-    public LawContent getContent() {
-        return content;
     }
 }

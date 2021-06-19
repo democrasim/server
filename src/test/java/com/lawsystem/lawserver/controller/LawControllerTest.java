@@ -18,20 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 class LawControllerTest {
 
-    @Autowired
-    LawController lawController;
-
-    @Test
-    void getAllPassedLaws() {
-        assertNotNull(lawController);
-        List<LawDto> list = lawController.getAllPassedLaws();
-
-        assertNotNull(list);
-        assertFalse(list.isEmpty());
-        list.forEach(Assertions::assertNotNull);
-
-    }
-
 
     @BeforeEach
     public void before() {

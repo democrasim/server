@@ -30,7 +30,8 @@ public class Law {
     @DBRef
     private Member legislator;
 
-    private LawContent content;
+    private String title;
+    private List<LawContent> content;
 
     @DBRef
     private List<LawVote> votes = new ArrayList<>();

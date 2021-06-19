@@ -1,5 +1,6 @@
 package com.lawsystem.lawserver.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.lawsystem.lawserver.dto.LawProposition;
@@ -20,15 +21,25 @@ public class MemberService {
 
     @SneakyThrows
     public Law requestRegister(String name, String phone, String reason) {
-        Member member = new Member(name, phone);
+        Member member = memberRepository.findByPhone(phone);
 
-        memberRepository.save(member);
+        if(member == null) {
+            member = new Member(name, phone);
+            memberRepository.save(member);
+        } else {
+            member.setName(name);
+        }
+
+        if(member.isRegistered()) {
+            return null;
+        }
 
         LawProposition proposition = new LawProposition();
         proposition.setLegislator(member.getId());
         proposition.setAnonymous(false);
         proposition.setFakeName("");
-        proposition.setContent(new AddMemberContent().setMember(member).setReason(reason));
+        proposition.setTitle("Law to add " + member.getName());
+        proposition.setContent(Collections.singletonList(new AddMemberContent().setMember(member).setReason(reason)));
 
         return lawService.proposeLaw(proposition);
     }

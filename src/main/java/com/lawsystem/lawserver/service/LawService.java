@@ -48,7 +48,7 @@ public class LawService {
         for (LawVote vote : votes) {
             if (vote.getVoter().equals(memberObject)) {
                 vote.setVote(type);
-                lawRepository.save(lawObject);
+                lawVoteRepository.save(vote);
                 return lawObject;
             }
         }
@@ -66,7 +66,7 @@ public class LawService {
     public Law proposeLaw(LawProposition proposition) throws UnregisteredMemberException {
         Member member = memberRepository.findById(proposition.getLegislator()).orElseThrow(IllegalArgumentException::new);
 
-        if (!member.isRegistered() && !(proposition.getContent() instanceof AddMemberContent)) {
+        if (!member.isRegistered() && proposition.getContent().stream().noneMatch(lawContent -> lawContent instanceof AddMemberContent)) {
             throw new UnregisteredMemberException();
         }
 
@@ -82,8 +82,9 @@ public class LawService {
 
         law.setResolveTime(finished);
 
-        LawContent content = proposition.getContent();
-        law.setContent(content);
+        law.setTitle(proposition.getTitle());
+
+        law.setContent(proposition.getContent());
 
         lawRepository.save(law);
 
@@ -112,5 +113,9 @@ public class LawService {
                                 .getId()
                                 .equals(userId)))
                 .collect(Collectors.toList());
+    }
+
+    public Law get(String lawId) {
+        return lawRepository.findById(lawId).orElse(null);
     }
 }

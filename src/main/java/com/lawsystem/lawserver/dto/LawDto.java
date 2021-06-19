@@ -20,11 +20,13 @@ public class LawDto {
 
     private Member legislator;
 
-    private LawContent content;
+    private List<LawContent> content;
 
     private List<LawVote> votes;
 
     private LawStatus status = LawStatus.UNDER_VOTE;
+
+    private String title;
 
     private Date resolveTime;
     private Date timestamp;

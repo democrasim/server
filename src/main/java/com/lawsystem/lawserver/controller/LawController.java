@@ -11,7 +11,9 @@ import com.lawsystem.lawserver.exception.LawNotUnderVoteException;
 import com.lawsystem.lawserver.exception.UnregisteredMemberException;
 import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.LawStatus;
+import com.lawsystem.lawserver.model.content.LawContent;
 import com.lawsystem.lawserver.service.LawService;
+import com.lawsystem.lawserver.util.DataConverter;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -25,6 +27,7 @@ public class LawController {
 
     final LawService lawService;
     final ModelMapper modelMapper;
+    final DataConverter dataConverter;
 
 
     @GetMapping(path = "with_status/{status}/", params = {"page", "limit"})
@@ -33,9 +36,9 @@ public class LawController {
         List<Law> laws = lawService.getAllLawsByStatus(status, page, limit);
 
         if (StringUtils.isBlank(userId)) {
-            return lawsToDataTransferObjects(laws);
+            return dataConverter.lawsToDataTransferObjects(laws);
         }
-        return lawsToDataTransferObjectsById(laws, userId);
+        return dataConverter.lawsToDataTransferObjectsById(laws, userId);
     }
 
     @GetMapping(path = "with_status/{status}/")
@@ -44,51 +47,35 @@ public class LawController {
         List<Law> laws = lawService.getAllLawsByStatus(status);
 
         if (StringUtils.isBlank(userId)) {
-            return lawsToDataTransferObjects(laws);
+            return dataConverter.lawsToDataTransferObjects(laws);
         }
-        return lawsToDataTransferObjectsById(laws, userId);
+        return dataConverter.lawsToDataTransferObjectsById(laws, userId);
     }
 
-    private List<LawDto> lawsToDataTransferObjects(List<Law> laws) {
-        return laws.stream()
-                .map(law -> modelMapper.map(law, LawDto.class).setContent(law.getContent()))
-                .peek(law -> law.setContentString(law.getContent().toString()))
-                .collect(Collectors.toList());
-    }
 
-    private List<LawDto> lawsToDataTransferObjectsById(List<Law> laws, String userId) {
-        return laws.stream()
-                .map(law -> modelMapper.map(law, LawDto.class).setContent(law.getContent()))
-                .peek(law -> law.setContentString(law.getContent().toString()))
-                .peek(law -> law.getVotes().stream().filter(vote -> vote.getVoter().getId().equals(userId)).findAny().ifPresent(law::setUserVote))
-                .collect(Collectors.toList());
-    }
 
-    private LawDto lawToDataTransferObject(Law law, String userId) {
-        LawDto output = modelMapper.map(law, LawDto.class).setContent(law.getContent());
-        output.setContentString(law.getContent().toString());
-        if(userId != null) {
-            output.getVotes().stream().filter(vote -> vote.getVoter().getId().equals(userId)).findAny().ifPresent(output::setUserVote);
-        }
-        return output;
-    }
 
     @GetMapping(path = "not_voted")
     public @ResponseBody
     List<LawDto> getAllNotVotedLaws(String userId) {
-        return lawsToDataTransferObjectsById(lawService.getAllUnvotedLaws(userId), userId);
+        return dataConverter.lawsToDataTransferObjectsById(lawService.getAllUnvotedLaws(userId), userId);
     }
 
     @PostMapping(path = "propose")
     public @ResponseBody
     LawDto propose(@RequestBody LawProposition proposition) throws UnregisteredMemberException {
-        return modelMapper.map(lawService.proposeLaw(proposition), LawDto.class);
+        return dataConverter.lawToDataTransferObject(lawService.proposeLaw(proposition), proposition.getLegislator());
     }
 
     @PutMapping(path = "vote")
     public @ResponseBody
     LawDto vote(@RequestBody VoteDto vote) throws UnregisteredMemberException, LawNotUnderVoteException {
-        return lawToDataTransferObject(lawService.vote(vote.getLaw(), vote.getMember(), vote.getType(), vote.getReason()), vote.getMember());
+        return dataConverter.lawToDataTransferObject(lawService.vote(vote.getLaw(), vote.getMember(), vote.getType(), vote.getReason()), vote.getMember());
+    }
+
+    @GetMapping(path = "get")
+    public @ResponseBody LawDto getLaw(String lawId, String userId) {
+        return dataConverter.lawToDataTransferObject(lawService.get(lawId), userId);
     }
 
 }

@@ -54,7 +54,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String token = Jwts.builder()
                 .setSubject(((UserDetailsImpl) authResult.getPrincipal()).getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + 864_000_000))
-                .signWith(SignatureAlgorithm.HS512, "TotallySecretKeyHereNothingToWorryAbout".getBytes())
+                .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET_KEY.getBytes())
                 .compact();
 
         String phone = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();

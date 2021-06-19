@@ -27,7 +27,6 @@ public class AuthenticationController {
         Member member = memberRepository.findByPhone(mobile);
 
         if (member == null) return ResponseEntity.unprocessableEntity().build();
-
         WhatsAppCode code = generateCode();
 
         member.setLatestCode(code);
