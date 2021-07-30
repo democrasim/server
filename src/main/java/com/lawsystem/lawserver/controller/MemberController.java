@@ -40,5 +40,11 @@ public class MemberController {
         return memberService.byId(id);
     }
 
+    @GetMapping(path = "by_phone/{phone}")
+    public @ResponseBody
+    Member byPhone(@PathVariable("phone") String phone) {
+        return memberService.byPhone(phone);
+    }
+
 
 }

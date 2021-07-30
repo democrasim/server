@@ -27,6 +27,7 @@ public class LawService {
     final LawRepository lawRepository;
     final LawContentRepository lawContentRepository;
     final SequenceGeneratorService sequenceGeneratorService;
+    final WhatsAppService whatsAppService;
     final VariableService variableService;
 
     public Law vote(String law, String member, VoteType type, String reason) throws UnregisteredMemberException, LawNotUnderVoteException {
@@ -88,6 +89,8 @@ public class LawService {
 
         lawRepository.save(law);
 
+        whatsAppService.sendNewLaw(law);
+
         return law;
     }
 
@@ -115,6 +118,10 @@ public class LawService {
                 .collect(Collectors.toList());
     }
 
+
+    public Law getByNumber(int number) {
+        return lawRepository.getByNumber(number);
+    }
     public Law get(String lawId) {
         return lawRepository.findById(lawId).orElse(null);
     }

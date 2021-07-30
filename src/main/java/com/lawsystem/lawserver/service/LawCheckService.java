@@ -47,9 +47,11 @@ public class LawCheckService {
                         law.getContent().forEach(executor::failed);
                     }
 
-                    whatsAppService.sendFinishedLaw(dataConverter.lawToDataTransferObject(law));
 
                     lawRepository.save(law);
+
+                    whatsAppService.sendFinishedLaw(law);
+
                 }
         );
     }

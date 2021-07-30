@@ -1,53 +1,49 @@
 package com.lawsystem.lawserver.service;
 
 import com.lawsystem.lawserver.config.WhatsAppConfiguration;
-import com.lawsystem.lawserver.dto.LawDto;
 import com.lawsystem.lawserver.dto.WhatsAppCode;
-import com.lawsystem.lawserver.dto.wa.SendMessageFormat;
 import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.Member;
+import com.lawsystem.lawserver.util.DataConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
 
 @AllArgsConstructor
 @Service
 public class WhatsAppService {
 
     RestTemplate restTemplate;
-
+    DataConverter dataConverter;
     WhatsAppConfiguration configuration;
 
     public boolean sendRegistered(Member member) {
-        ResponseEntity<String> entity = restTemplate.postForEntity(configuration.getServerUid() + "/send_message", new SendMessageFormat(
-                "🏆 You are now successfully registered to Democrasim!", member.getPhone() + "@c.us"), String.class);
+        ResponseEntity<Void> entity = restTemplate.postForEntity(configuration.getServerUid() + "/add_member_passed", member, Void.class);
         return entity.getStatusCode().is2xxSuccessful();
     }
 
     public boolean sendFailedRegister(Member member) {
-        ResponseEntity<String> entity = restTemplate.postForEntity(configuration.getServerUid() + "/send_message", new SendMessageFormat(
-                "⛔ Unfortunately, the law to add you to Democrasim failed.", member.getPhone() + "@c.us"), String.class);
+        ResponseEntity<Void> entity = restTemplate.postForEntity(configuration.getServerUid() + "/add_member_failed", member, Void.class);
         return entity.getStatusCode().is2xxSuccessful();
     }
 
     public boolean sendCode(WhatsAppCode code, String phone) {
-        ResponseEntity<String> entity = restTemplate.postForEntity(configuration.getServerUid() + "/send_message", new SendMessageFormat(
-                "Your access code for 🛂 Democrasim is\n"
-                        + code.getCode()
-                        + "\n\n_if this was not you please ignore this._", phone + "@c.us"), String.class);
+        ResponseEntity<Void> entity = restTemplate.postForEntity(configuration.getServerUid() + "/send_code",
+                Arrays.asList(code.getCode(), phone + "@c.us"), Void.class);
         return entity.getStatusCode().is2xxSuccessful();
     }
 
-    public boolean sendFinishedLaw(LawDto law) {
-        ResponseEntity<String> entity = restTemplate.postForEntity(configuration.getServerUid() + "/send_message", new SendMessageFormat(
-                "*Law #" + law.getNumber() + "*\n"
-                        + "*Legislator:* " + law.getLegislator().getName() + "\n\n"
-                        + law.getContentString() + "\n"
-                        + "*Status:* " + law.getStatus(),
-                configuration.getMainChatId()), String.class
-        );
 
+    public boolean sendNewLaw(Law law) {
+        ResponseEntity<Void> entity = restTemplate.postForEntity(configuration.getServerUid() + "/new_law", dataConverter.lawToDataTransferObject(law), Void.class);
+        return entity.getStatusCode().is2xxSuccessful();
+    }
+
+    public boolean sendFinishedLaw(Law law) {
+        ResponseEntity<Void> entity = restTemplate.postForEntity(configuration.getServerUid() + "/finished_law", dataConverter.lawToDataTransferObject(law), Void.class);
         return entity.getStatusCode().is2xxSuccessful();
     }
 }

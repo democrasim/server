@@ -21,6 +21,8 @@ public interface LawRepository extends MongoRepository<Law, String> {
 
     List<Law> findAllByStatus(LawStatus status, Pageable pageable);
 
+    Law getByNumber(int number);
+
     List<Law> findAllByTimestampBeforeAndStatus(Date timestamp, LawStatus status);
 
     List<Law> findAllByResolveTimeBeforeAndStatus(Date resolveTime, LawStatus status);

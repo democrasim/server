@@ -56,4 +56,8 @@ public class MemberService {
     public Member byId(String id) {
         return memberRepository.findById(id).orElse(null);
     }
+
+    public Member byPhone(String phone) {
+        return memberRepository.findByPhone(phone);
+    }
 }

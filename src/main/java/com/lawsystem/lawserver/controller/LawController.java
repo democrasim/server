@@ -73,6 +73,14 @@ public class LawController {
         return dataConverter.lawToDataTransferObject(lawService.vote(vote.getLaw(), vote.getMember(), vote.getType(), vote.getReason()), vote.getMember());
     }
 
+
+    @GetMapping(path = "get_number")
+    public @ResponseBody LawDto getLawByNumber(int number) {
+        Law law = lawService.getByNumber(number);
+        if(law == null) return null;
+        return dataConverter.lawToDataTransferObject(law);
+    }
+
     @GetMapping(path = "get")
     public @ResponseBody LawDto getLaw(String lawId, String userId) {
         return dataConverter.lawToDataTransferObject(lawService.get(lawId), userId);
