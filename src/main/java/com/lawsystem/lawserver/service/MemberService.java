@@ -60,4 +60,7 @@ public class MemberService {
     public Member byPhone(String phone) {
         return memberRepository.findByPhone(phone);
     }
+    public Member byName(String name){
+        return memberRepository.findByName(name);
+    }
 }

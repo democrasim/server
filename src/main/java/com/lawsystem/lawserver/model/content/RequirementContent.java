@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class RequirementContent extends DescribedContent {
-    private Date due;
+    private String due;
 
     @Override
     public String toString() {

@@ -17,6 +17,7 @@ import lombok.experimental.Accessors;
         @JsonSubTypes.Type(value = ChangePresidentContent.class, name="CHANGE_PRESIDENT"),
         @JsonSubTypes.Type(value = EventContent.class, name="EVENT"),
         @JsonSubTypes.Type(value = RequirementContent.class, name="REQUIREMENT"),
+        @JsonSubTypes.Type(value =RemoveMemberContent.class, name="REMOVE_MEMBER")
 })
 public class LawContent {
 }

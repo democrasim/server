@@ -13,6 +13,7 @@ public interface MemberRepository extends MongoRepository<Member, String> {
     boolean existsByPhoneOrName(String phone, String name);
 
     Member findByPhone(String phone);
+    Member findByName(String name);
 
     List<Member> findAll();
 
