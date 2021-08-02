@@ -4,8 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 
-@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class BanContent {
+public class BanContent extends PunishmentContent {
 
 }

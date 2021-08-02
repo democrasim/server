@@ -11,8 +11,8 @@ public class MainExecutor {
     private ExecutorMap executorMap;
 
 
-    public <T extends LawContent> void execute(T content) {
-        LawExecutor<T> executor = (LawExecutor<T>) executorMap.get(content.getClass());
+    public void execute(LawContent content) {
+        LawExecutor<LawContent> executor = (LawExecutor<LawContent>) executorMap.get(content.getClass());
         if (executor != null) {
             executor.execute(content);
         }

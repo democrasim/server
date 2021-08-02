@@ -63,4 +63,8 @@ public class MemberService {
     public Member byName(String name){
         return memberRepository.findByName(name);
     }
+    public void remove(Member member){
+        member.setRegistered(false);
+        memberRepository.save(member);
+    }
 }
