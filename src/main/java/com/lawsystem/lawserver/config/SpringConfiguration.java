@@ -1,6 +1,7 @@
 package com.lawsystem.lawserver.config;
 
 import com.lawsystem.lawserver.model.ConfigurationLaws;
+import com.lawsystem.lawserver.repo.MemberRepository;
 import com.lawsystem.lawserver.service.VariableService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class SpringConfiguration {
     private final VariableService variableService;
+    private MemberRepository memberRepository;
 
     @Bean
     public ModelMapper modelMapper() {
@@ -32,7 +34,7 @@ public class SpringConfiguration {
             ConfigurationLaws laws = new ConfigurationLaws();
             laws.setMinMajorityForMemberJoining(.5);
             laws.setPresident(null);
-            laws.setMainJudge(null);
+            laws.setMainJudge(memberRepository.findByName("גיל"));
             laws.setTimeForLawsToPass(10000);
 
             variableService.save(laws);

@@ -3,6 +3,7 @@ package com.lawsystem.lawserver.service;
 import com.lawsystem.lawserver.dto.ProsecutionDto;
 import com.lawsystem.lawserver.exception.InvalidProsecution;
 import com.lawsystem.lawserver.model.Law;
+import com.lawsystem.lawserver.model.Member;
 import com.lawsystem.lawserver.model.Prosecution;
 import com.lawsystem.lawserver.model.ProsecutionStatus;
 import com.lawsystem.lawserver.model.content.LawContent;
@@ -22,6 +23,7 @@ public class CourtService {
     private ProsecutionRepository prosecutionRepository;
     private MainPunishmentExecutor punishmentExecutor;
     private WhatsAppService whatsAppService;
+    private VariableService variableService;
 
     public Prosecution prosecute(ProsecutionDto prosecutionDto) throws InvalidProsecution {
         Law law = lawRepository.findById(prosecutionDto.getLaw()).orElseThrow(IllegalArgumentException::new);
@@ -79,5 +81,8 @@ public class CourtService {
         prosecution.setAppealed(false);
         prosecutionRepository.save(prosecution);
         whatsAppService.sendProsecutionAppealedDecided(prosecution);
+    }
+    public Member getJudge(){
+        return variableService.getInstance().getMainJudge();
     }
 }
