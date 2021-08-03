@@ -4,6 +4,7 @@ import com.lawsystem.lawserver.config.WhatsAppConfiguration;
 import com.lawsystem.lawserver.dto.WhatsAppCode;
 import com.lawsystem.lawserver.model.Law;
 import com.lawsystem.lawserver.model.Member;
+import com.lawsystem.lawserver.model.Prosecution;
 import com.lawsystem.lawserver.util.DataConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +46,17 @@ public class WhatsAppService {
     public boolean sendFinishedLaw(Law law) {
         ResponseEntity<Void> entity = restTemplate.postForEntity(configuration.getServerUid() + "/finished_law", dataConverter.lawToDataTransferObject(law), Void.class);
         return entity.getStatusCode().is2xxSuccessful();
+    }
+    public void sendProsecution(Prosecution prosecution){
+        restTemplate.postForEntity(configuration.getServerUid()+"/new_prosecution",prosecution,Void.class);
+    }
+    public void sendProsecutionDecided(Prosecution prosecution){
+        restTemplate.postForEntity(configuration.getServerUid()+"/prosecution_decided",prosecution,Void.class);
+    }
+    public void sendProsecutionAppealed(Prosecution prosecution){
+        restTemplate.postForEntity(configuration.getServerUid()+"/prosecution_appealed",prosecution,Void.class);
+    }
+    public void sendProsecutionAppealedDecided(Prosecution prosecution){
+        restTemplate.postForEntity(configuration.getServerUid()+"/prosecution_appeal_decided",prosecution,Void.class);
     }
 }

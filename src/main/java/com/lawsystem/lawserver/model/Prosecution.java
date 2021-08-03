@@ -20,4 +20,5 @@ public class Prosecution {
     private Member prosecuted;
     private String info;
     private ProsecutionStatus status;
+    private boolean isAppealed;
 }
