@@ -18,6 +18,8 @@ public class ConfigurationLaws {
     private String id;
     @DBRef
     private Member president;
+    @DBRef
+    private Member mainJudge;
     private int timeForLawsToPass;
     private double minMajorityForMemberJoining;
 }

@@ -22,4 +22,8 @@ public class MainPunishmentExecutor {
     public void execute(Punishment punishment, Member member) {
         ((PunishmentExecutor<Punishment>) executors.get(punishment.getClass())).execute(punishment, member);
     }
+
+    public void undo(Punishment punishment, Member member) {
+        ((PunishmentExecutor<Punishment>) executors.get(punishment.getClass())).undo(punishment, member);
+    }
 }

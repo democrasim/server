@@ -14,4 +14,9 @@ public class BanPunishmentExecutor implements PunishmentExecutor<BanPunishment> 
     public void execute(BanPunishment content, Member member) {
         memberService.remove(member);
     }
+
+    @Override
+    public void undo(BanPunishment content, Member member) {
+        memberService.addExistingMember(member);
+    }
 }

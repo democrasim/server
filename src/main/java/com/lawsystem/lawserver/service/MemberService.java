@@ -67,4 +67,8 @@ public class MemberService {
         member.setRegistered(false);
         memberRepository.save(member);
     }
+    public void addExistingMember(Member member){
+        member.setRegistered(true);
+        memberRepository.save(member);
+    }
 }

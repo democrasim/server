@@ -4,5 +4,6 @@ import com.lawsystem.lawserver.model.Member;
 import com.lawsystem.lawserver.model.punishments.Punishment;
 
 public interface PunishmentExecutor<T extends Punishment> {
-    default void execute(T content, Member member){}
+    void execute(T content, Member member);
+    void undo(T content, Member member);
 }
