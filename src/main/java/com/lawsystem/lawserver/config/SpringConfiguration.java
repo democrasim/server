@@ -34,7 +34,7 @@ public class SpringConfiguration {
             ConfigurationLaws laws = new ConfigurationLaws();
             laws.setMinMajorityForMemberJoining(.5);
             laws.setPresident(null);
-            laws.setMainJudge(memberRepository.findByName("גיל"));
+            laws.setMainJudge(memberRepository.findByName("דן"));
             laws.setTimeForLawsToPass(10000);
 
             variableService.save(laws);

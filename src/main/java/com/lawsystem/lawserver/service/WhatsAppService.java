@@ -47,8 +47,8 @@ public class WhatsAppService {
         ResponseEntity<Void> entity = restTemplate.postForEntity(configuration.getServerUid() + "/finished_law", dataConverter.lawToDataTransferObject(law), Void.class);
         return entity.getStatusCode().is2xxSuccessful();
     }
-    public void sendProsecution(Prosecution prosecution){
-        restTemplate.postForEntity(configuration.getServerUid()+"/new_prosecution",prosecution,Void.class);
+    public String sendProsecution(Prosecution prosecution){
+        return restTemplate.postForEntity(configuration.getServerUid()+"/new_prosecution",prosecution,String.class).getBody();
     }
     public void sendProsecutionDecided(Prosecution prosecution){
         restTemplate.postForEntity(configuration.getServerUid()+"/prosecution_decided",prosecution,Void.class);

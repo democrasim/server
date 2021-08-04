@@ -21,4 +21,5 @@ public class Prosecution {
     private String info;
     private ProsecutionStatus status;
     private boolean isAppealed;
+    private String groupId;
 }

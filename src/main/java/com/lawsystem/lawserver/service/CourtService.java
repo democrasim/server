@@ -38,9 +38,10 @@ public class CourtService {
         Prosecution prosecution = new Prosecution(law, prosecutionDto.getSection(), punishmentContent,
                 memberRepository.findById(prosecutionDto.getProsecutor()).orElseThrow(IllegalArgumentException::new),
                 memberRepository.findById(prosecutionDto.getProsecuted()).orElseThrow(IllegalArgumentException::new),
-                prosecutionDto.getInfo(), ProsecutionStatus.IN_PROCESS, false);
+                prosecutionDto.getInfo(), ProsecutionStatus.IN_PROCESS, false,null);
+        String groupId= whatsAppService.sendProsecution(prosecution);
+        prosecution.setGroupId(groupId);
         prosecutionRepository.save(prosecution);
-        whatsAppService.sendProsecution(prosecution);
         return prosecution;
     }
     public void accept(String prosecutionId){
