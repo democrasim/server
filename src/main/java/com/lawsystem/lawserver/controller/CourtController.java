@@ -26,4 +26,12 @@ public class CourtController {
     Member judge(){
         return courtService.getJudge();
     }
+    @PostMapping(path = "decide", params = {"prosecutionId","accepted"})
+    public void decide(String prosecutionId, boolean accepted){
+        courtService.decide(prosecutionId,accepted);
+    }
+    @GetMapping(path = "get_by_group", params = {"groupId"})
+    public @ResponseBody Prosecution getByGroup(String groupId){
+        return courtService.byGroupId(groupId);
+    }
 }

@@ -35,47 +35,54 @@ public class CourtService {
             throw new InvalidProsecution();
         }
         PunishmentContent punishmentContent = (PunishmentContent) content;
-        Prosecution prosecution = new Prosecution(law, prosecutionDto.getSection(), punishmentContent,
+        Prosecution prosecution = new Prosecution("",law, prosecutionDto.getSection(), punishmentContent,
                 memberRepository.findById(prosecutionDto.getProsecutor()).orElseThrow(IllegalArgumentException::new),
                 memberRepository.findById(prosecutionDto.getProsecuted()).orElseThrow(IllegalArgumentException::new),
-                prosecutionDto.getInfo(), ProsecutionStatus.IN_PROCESS, false,null);
-        String groupId= whatsAppService.sendProsecution(prosecution);
+                prosecutionDto.getInfo(), ProsecutionStatus.IN_PROCESS, false, null);
+        String groupId = whatsAppService.sendProsecution(prosecution);
         prosecution.setGroupId(groupId);
         prosecutionRepository.save(prosecution);
         return prosecution;
     }
-    public void accept(String prosecutionId){
-        Prosecution prosecution=prosecutionRepository.findById(prosecutionId).orElseThrow(IllegalArgumentException::new);
-        punishmentExecutor.execute(prosecution.getPunishmentContent().getPunishment(), prosecution.getProsecuted());
-        prosecution.setStatus(ProsecutionStatus.ACCEPTED);
+
+    public void decide(String prosecutionId, boolean accepted) {
+        Prosecution prosecution = prosecutionRepository.findById(prosecutionId).orElseThrow(IllegalArgumentException::new);
+        if (accepted) {
+            punishmentExecutor.execute(prosecution.getPunishmentContent().getPunishment(), prosecution.getProsecuted());
+            prosecution.setStatus(ProsecutionStatus.ACCEPTED);
+        } else {
+            prosecution.setStatus(ProsecutionStatus.DENIED);
+        }
         prosecutionRepository.save(prosecution);
         whatsAppService.sendProsecutionDecided(prosecution);
     }
-    public void deny(String prosecutionId){
-        Prosecution prosecution=prosecutionRepository.findById(prosecutionId).orElseThrow(IllegalArgumentException::new);
-        prosecution.setStatus(ProsecutionStatus.DENIED);
-        prosecutionRepository.save(prosecution);
-        whatsAppService.sendProsecutionDecided(prosecution);
+
+    public Prosecution byGroupId(String groupId){
+        Prosecution t=prosecutionRepository.findByGroupId(groupId);
+        return prosecutionRepository.findByGroupId(groupId);
     }
-    public void appeal(String prosecutionId){
-        Prosecution prosecution=prosecutionRepository.findById(prosecutionId).orElseThrow(IllegalArgumentException::new);
-        if (prosecution.isAppealed()){
+
+
+    public void appeal(String prosecutionId) {
+        Prosecution prosecution = prosecutionRepository.findById(prosecutionId).orElseThrow(IllegalArgumentException::new);
+        if (prosecution.isAppealed()) {
             throw new IllegalArgumentException();
         }
         prosecution.setAppealed(true);
         prosecutionRepository.save(prosecution);
         whatsAppService.sendProsecutionAppealed(prosecution);
     }
-    public void acceptAppeal(String prosecutionId){
-        Prosecution prosecution=prosecutionRepository.findById(prosecutionId).orElseThrow(IllegalArgumentException::new);
-        if (!prosecution.isAppealed()||prosecution.getStatus()==ProsecutionStatus.IN_PROCESS){
+
+    public void acceptAppeal(String prosecutionId) {
+        Prosecution prosecution = prosecutionRepository.findById(prosecutionId).orElseThrow(IllegalArgumentException::new);
+        if (!prosecution.isAppealed() || prosecution.getStatus() == ProsecutionStatus.IN_PROCESS) {
             throw new IllegalArgumentException();
         }
-        if (prosecution.getStatus()==ProsecutionStatus.ACCEPTED){
+        if (prosecution.getStatus() == ProsecutionStatus.ACCEPTED) {
             prosecution.setStatus(ProsecutionStatus.DENIED);
             punishmentExecutor.undo(prosecution.getPunishmentContent().getPunishment(), prosecution.getProsecuted());
         }
-        if (prosecution.getStatus()==ProsecutionStatus.DENIED) {
+        if (prosecution.getStatus() == ProsecutionStatus.DENIED) {
             prosecution.setStatus(ProsecutionStatus.ACCEPTED);
             punishmentExecutor.execute(prosecution.getPunishmentContent().getPunishment(), prosecution.getProsecuted());
         }
@@ -83,7 +90,8 @@ public class CourtService {
         prosecutionRepository.save(prosecution);
         whatsAppService.sendProsecutionAppealedDecided(prosecution);
     }
-    public Member getJudge(){
+
+    public Member getJudge() {
         return variableService.getInstance().getMainJudge();
     }
 }
