@@ -111,7 +111,7 @@ public class LawService {
                 .filter(law -> law
                         .getVotes()
                         .stream()
-                        .anyMatch(vote -> vote
+                        .allMatch(vote -> !vote
                                 .getVoter()
                                 .getId()
                                 .equals(userId)))
